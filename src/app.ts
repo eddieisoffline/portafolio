@@ -1,11 +1,14 @@
+import type { IncomingMessage, ServerResponse } from "node:http";
 import fastify, {
   type FastifyInstance,
   type FastifyReply
 } from "fastify";
 
 import type { AppConfig } from "./config/env.js";
-import type { ProjectRepository } from "./db/projectRepository.js";
-import type { GitHubClient } from "./services/githubClient.js";
+import { loadEnv } from "./config/env.js";
+import { createPool } from "./db/pool.js";
+import { ProjectRepository } from "./db/projectRepository.js";
+import { GitHubClient } from "./services/githubClient.js";
 import { SyncService } from "./services/syncService.js";
 import { registerProjectRoutes } from "./routes/projects.js";
 import { registerSyncRoutes } from "./routes/sync.js";
@@ -36,6 +39,16 @@ const CORS_ALLOWED_HEADERS = [
   "x-hub-signature-256"
 ].join(",");
 const CORS_MAX_AGE_SECONDS = "600";
+let vercelAppPromise: Promise<FastifyInstance> | undefined;
+
+export default async function handler(
+  request: IncomingMessage,
+  response: ServerResponse
+): Promise<void> {
+  const app = await getVercelApp();
+  await app.ready();
+  app.server.emit("request", request, response);
+}
 
 export async function createApp(options: CreateAppOptions): Promise<FastifyInstance> {
   const app = fastify({
@@ -119,6 +132,25 @@ export async function createApp(options: CreateAppOptions): Promise<FastifyInsta
   await registerProjectRoutes(app, options.projectRepository);
   await registerWebhookRoutes(app, options.config, syncService);
   await registerSyncRoutes(app, options.config, syncService);
+
+  return app;
+}
+
+async function getVercelApp(): Promise<FastifyInstance> {
+  vercelAppPromise ??= createVercelApp();
+  return vercelAppPromise;
+}
+
+async function createVercelApp(): Promise<FastifyInstance> {
+  const config = loadEnv();
+  const pool = createPool(config.databaseUrl);
+  const projectRepository = new ProjectRepository(pool);
+  const githubClient = new GitHubClient(config.githubToken);
+  const app = await createApp({ config, projectRepository, githubClient });
+
+  app.addHook("onClose", async () => {
+    await pool.end();
+  });
 
   return app;
 }

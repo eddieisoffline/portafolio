@@ -1,0 +1,10 @@
+---
+import { getLocaleFromRequest, withLocale } from "../lib/i18n";
+
+export const prerender = false;
+
+const destination = withLocale("/", getLocaleFromRequest(Astro.request));
+
+Astro.response.status = 302;
+Astro.response.headers.set("Location", destination);
+---

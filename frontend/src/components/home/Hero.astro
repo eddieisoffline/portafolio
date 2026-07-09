@@ -1,0 +1,52 @@
+---
+import Button from "../ui/Button.astro";
+import Badge from "../ui/Badge.astro";
+import { copy, type Locale, withLocale } from "../../lib/i18n";
+import { socialLinks } from "../../lib/siteContent";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const visibleSocialLinks = socialLinks.filter((link) => link.href.trim().length > 0);
+const t = copy[locale];
+---
+
+<section class="relative overflow-hidden border-b border-border">
+  <div class="mx-auto grid min-h-[calc(100dvh-4rem)] w-full max-w-6xl items-center gap-12 px-5 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.08fr_0.92fr] lg:px-8">
+    <div class="hero-reveal max-w-3xl">
+      <Badge tone="primary">{t.hero.role}</Badge>
+      <h1 class="mt-7 text-balance text-5xl font-semibold leading-[1.04] text-ink sm:text-6xl lg:text-7xl">
+        {t.hero.headline}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-muted">
+        {t.hero.summary}
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href={withLocale("/projects", locale)} variant="primary">
+          {t.hero.projectsCta}
+        </Button>
+        <Button href={withLocale("/#contact", locale)} variant="secondary">
+          {t.hero.contactCta}
+        </Button>
+        {
+          visibleSocialLinks.map((link) => (
+            <Button href={link.href} variant="ghost" external>
+              {link.label}
+            </Button>
+          ))
+        }
+      </div>
+    </div>
+
+    <aside class="hero-reveal border-y border-border py-6 lg:border-y-0 lg:border-l lg:py-0 lg:pl-8">
+      <p class="font-mono text-xs uppercase tracking-[0.18em] text-primary">
+        {t.hero.noteLabel}
+      </p>
+      <p class="mt-5 text-2xl font-semibold leading-9 text-ink">
+        {t.hero.professionalNote}
+      </p>
+    </aside>
+  </div>
+</section>

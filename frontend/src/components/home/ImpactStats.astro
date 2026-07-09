@@ -1,0 +1,29 @@
+---
+import { copy, type Locale } from "../../lib/i18n";
+import Section from "../ui/Section.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+
+<Section
+  id="impact"
+  title={t.home.impactTitle}
+  description={t.home.impactDescription}
+>
+  <div class="grid gap-4 sm:grid-cols-3">
+    {
+      t.impactStats.map((stat) => (
+        <div class="rounded-xl border border-border bg-surface p-5">
+          <p class="text-2xl font-semibold text-primary-strong">{stat.value}</p>
+          <h3 class="mt-4 text-base font-semibold text-ink">{stat.label}</h3>
+          <p class="mt-2 text-sm leading-6 text-muted">{stat.detail}</p>
+        </div>
+      ))
+    }
+  </div>
+</Section>

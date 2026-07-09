@@ -1,0 +1,26 @@
+---
+type Tone = "default" | "primary" | "muted";
+
+interface Props {
+  tone?: Tone;
+  class?: string;
+}
+
+const { tone = "default", class: className = "" } = Astro.props;
+
+const toneClasses: Record<Tone, string> = {
+  default: "border-border bg-surface text-muted",
+  primary: "border-primary/40 bg-primary/10 text-primary-strong",
+  muted: "border-border/70 bg-transparent text-subtle"
+};
+---
+
+<span
+  class:list={[
+    "inline-flex min-h-7 items-center rounded-full border px-3 py-1 text-xs font-medium leading-none",
+    toneClasses[tone],
+    className
+  ]}
+>
+  <slot />
+</span>

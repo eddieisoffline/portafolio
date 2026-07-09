@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import ProjectMeta from "../components/projects/ProjectMeta.astro";
+import { formatDate } from "../lib/formatDate";
+import { copy, interpolate, type Locale, withLocale } from "../lib/i18n";
+import type { Project } from "../lib/types";
+
+interface Props {
+  project: Project;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const t = copy[locale];
+---
+
+<BaseLayout
+  title={project.title}
+  description={project.summary ?? project.title}
+  locale={locale}
+>
+  <article class="mx-auto w-full max-w-6xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
+      <div class="min-w-0">
+        <div class="mb-8">
+          <a
+            href={withLocale("/projects", locale)}
+            class="text-sm font-medium text-muted transition hover:text-primary-strong"
+          >
+            {t.projects.back}
+          </a>
+          <p class="mt-8 font-mono text-xs uppercase tracking-[0.18em] text-primary">
+            {formatDate(project.date, locale)}
+          </p>
+          <h1 class="mt-4 max-w-4xl text-balance text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+            {project.title}
+          </h1>
+          {
+            project.summary ? (
+              <p class="mt-5 max-w-3xl text-lg leading-8 text-muted">
+                {project.summary}
+              </p>
+            ) : null
+          }
+        </div>
+
+        {
+          project.coverImage ? (
+            <img
+              src={project.coverImage}
+              alt={interpolate(t.projects.coverAlt, { title: project.title })}
+              loading="eager"
+              class="mb-10 aspect-[16/8] w-full rounded-xl border border-border object-cover"
+            />
+          ) : null
+        }
+
+        <slot />
+      </div>
+
+      <div class="lg:sticky lg:top-24">
+        <ProjectMeta project={project} locale={locale} />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

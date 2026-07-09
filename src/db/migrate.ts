@@ -2,6 +2,7 @@ import "dotenv/config";
 
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import type pg from "pg";
 
 import { loadEnv } from "../config/env.js";
@@ -60,7 +61,7 @@ export async function runMigrations(
 
 async function main(): Promise<void> {
   const config = loadEnv();
-  const pool: PgPool = createPool(config.databaseUrl);
+  const pool: PgPool = createPool(config.migrationDatabaseUrl);
 
   try {
     const applied = await runMigrations(pool);
@@ -75,7 +76,7 @@ async function main(): Promise<void> {
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((error) => {
     console.error(error);
     process.exitCode = 1;

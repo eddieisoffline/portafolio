@@ -1,0 +1,37 @@
+---
+import { copy, type Locale, withLocale } from "../../lib/i18n";
+import { siteProfile, socialLinks } from "../../lib/siteContent";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const visibleSocialLinks = socialLinks.filter((link) => link.href.trim().length > 0);
+const t = copy[locale];
+---
+
+<footer class="border-t border-border">
+  <div class="mx-auto flex w-full max-w-6xl flex-col gap-5 px-5 py-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+    <p>
+      {siteProfile.name} / {t.hero.role}
+    </p>
+    <div class="flex flex-wrap gap-4">
+      <a class="transition hover:text-ink" href={withLocale("/projects", locale)}>
+        {t.nav.projects}
+      </a>
+      {
+        visibleSocialLinks.map((link) => (
+          <a
+            class="transition hover:text-ink"
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</footer>

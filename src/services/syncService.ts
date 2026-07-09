@@ -168,6 +168,7 @@ export class SyncService {
         date: parsed.metadata.date,
         contentMarkdown: parsed.contentMarkdown,
         contentHtml: parsed.contentHtml,
+        translations: parsed.translations,
         frontmatter: parsed.frontmatter,
         sha: file.sha
       };

@@ -43,6 +43,20 @@ describeWithDatabase("ProjectRepository", () => {
       date: "2026-01-15",
       contentMarkdown: "# Original",
       contentHtml: "<h1>Original</h1>",
+      translations: {
+        en: {
+          title: "Original title",
+          summary: "Original summary",
+          contentMarkdown: "# Original",
+          contentHtml: "<h1>Original</h1>"
+        },
+        es: {
+          title: "Titulo original",
+          summary: "Resumen original",
+          contentMarkdown: "# Original ES",
+          contentHtml: "<h1>Original ES</h1>"
+        }
+      },
       frontmatter: { title: "Original title" },
       sha: "sha-1"
     };
@@ -54,6 +68,15 @@ describeWithDatabase("ProjectRepository", () => {
       ...baseProject,
       title: "Updated title",
       summary: "Updated summary",
+      translations: {
+        ...baseProject.translations,
+        en: {
+          title: "Updated title",
+          summary: "Updated summary",
+          contentMarkdown: "# Updated",
+          contentHtml: "<h1>Updated</h1>"
+        }
+      },
       featured: true,
       sha: "sha-2"
     });
@@ -61,6 +84,10 @@ describeWithDatabase("ProjectRepository", () => {
     expect(updated.id).toBe(created.id);
     expect(updated.title).toBe("Updated title");
     expect(updated.featured).toBe(true);
+
+    const spanish = await repository.findBySlug("repo-readme", "es");
+    expect(spanish?.title).toBe("Titulo original");
+    expect(spanish?.contentHtml).toBe("<h1>Original ES</h1>");
 
     const listed = await repository.list();
     expect(listed.some((project) => project.slug === "repo-readme")).toBe(true);
@@ -81,6 +108,13 @@ describeWithDatabase("ProjectRepository", () => {
       date: null,
       contentMarkdown: "# Case Study",
       contentHtml: "<h1>Case Study</h1>",
+      translations: {
+        en: {
+          title: "Case Study",
+          contentMarkdown: "# Case Study",
+          contentHtml: "<h1>Case Study</h1>"
+        }
+      },
       frontmatter: { title: "Case Study" },
       sha: "sha-3"
     });

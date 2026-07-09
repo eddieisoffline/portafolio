@@ -1,0 +1,67 @@
+---
+export const prerender = false;
+
+import BaseLayout from "../../../components/layout/BaseLayout.astro";
+import LookerEmbed from "../../../components/projects/LookerEmbed.astro";
+import ProseContent from "../../../components/projects/ProseContent.astro";
+import ErrorState from "../../../components/ui/ErrorState.astro";
+import ArticleLayout from "../../../layouts/ArticleLayout.astro";
+import { getProject } from "../../../lib/api";
+import { copy, interpolate, isLocale, type Locale } from "../../../lib/i18n";
+import type { Project } from "../../../lib/types";
+
+const localeParam = Astro.params.locale;
+
+if (!isLocale(localeParam)) {
+  return Astro.redirect("/en/projects", 302);
+}
+
+const locale: Locale = localeParam;
+const slug = Astro.params.slug;
+const t = copy[locale];
+let project: Project | null = null;
+let errorMessage = "";
+
+if (!slug) {
+  Astro.response.status = 404;
+  errorMessage = t.projects.missingSlug;
+} else {
+  try {
+    project = await getProject(slug, locale);
+
+    if (!project) {
+      Astro.response.status = 404;
+      errorMessage = t.projects.notFound;
+    }
+  } catch {
+    Astro.response.status = 502;
+    errorMessage = t.projects.loadError;
+  }
+}
+---
+
+{
+  project ? (
+    <ArticleLayout project={project} locale={locale}>
+      <ProseContent html={project.contentHtml} locale={locale} />
+      <LookerEmbed
+        url={project.dashboardUrl}
+        title={interpolate(t.projects.dashboardTitle, { title: project.title })}
+      />
+    </ArticleLayout>
+  ) : (
+    <BaseLayout
+      title={t.projects.unavailable}
+      description={errorMessage}
+      locale={locale}
+    >
+      <section class="mx-auto w-full max-w-4xl px-5 py-16 sm:px-6 lg:px-8">
+        <ErrorState
+          title={t.projects.unavailable}
+          message={errorMessage}
+          locale={locale}
+        />
+      </section>
+    </BaseLayout>
+  )
+}

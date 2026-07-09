@@ -1,0 +1,16 @@
+---
+import type { Locale } from "../../lib/i18n";
+import type { Project } from "../../lib/types";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props {
+  projects: Project[];
+  locale: Locale;
+}
+
+const { projects, locale } = Astro.props;
+---
+
+<div class="grid gap-5 md:grid-cols-2">
+  {projects.map((project) => <ProjectCard project={project} locale={locale} />)}
+</div>

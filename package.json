@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "npm run migrate && tsx watch src/server.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
     "migrate": "tsx src/db/migrate.ts",
@@ -33,5 +33,9 @@
   },
   "engines": {
     "node": ">=20.11.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "esbuild@0.25.12": true
   }
 }

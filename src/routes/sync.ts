@@ -2,7 +2,13 @@ import type { FastifyInstance } from "fastify";
 import { z } from "zod";
 
 import type { AppConfig } from "../config/env.js";
+import { checkRateLimit, getRateLimitHeaders } from "../security/rateLimit.js";
 import type { SyncService } from "../services/syncService.js";
+
+const SYNC_RATE_LIMIT = {
+  limit: 10,
+  windowMs: 60 * 1000
+};
 
 const SyncRepoBodySchema = z.object({
   owner: z.string().trim().min(1),
@@ -17,6 +23,18 @@ export async function registerSyncRoutes(
   syncService: SyncService
 ): Promise<void> {
   app.post("/sync/repo", async (request, reply) => {
+    const rateLimit = checkRateLimit(`sync:${request.ip}`, SYNC_RATE_LIMIT);
+    if (!rateLimit.allowed) {
+      return reply
+        .code(429)
+        .headers(getRateLimitHeaders(rateLimit))
+        .send({
+          error: "rate_limited",
+          message: "Too many sync attempts. Try again later.",
+          requestId: request.id
+        });
+    }
+
     if (request.headers.authorization !== `Bearer ${config.syncToken}`) {
       return reply.code(401).send({
         error: "unauthorized",

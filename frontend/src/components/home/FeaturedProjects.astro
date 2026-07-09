@@ -1,0 +1,43 @@
+---
+import type { Project } from "../../lib/types";
+import { copy, type Locale, withLocale } from "../../lib/i18n";
+import ProjectGrid from "../projects/ProjectGrid.astro";
+import Button from "../ui/Button.astro";
+import EmptyState from "../ui/EmptyState.astro";
+import ErrorState from "../ui/ErrorState.astro";
+import Section from "../ui/Section.astro";
+
+interface Props {
+  projects: Project[];
+  hadError?: boolean;
+  locale: Locale;
+}
+
+const { projects, locale, hadError = false } = Astro.props;
+const t = copy[locale];
+---
+
+<Section
+  title={t.home.featuredTitle}
+  description={t.home.featuredDescription}
+>
+  {
+    hadError ? (
+      <ErrorState locale={locale} />
+    ) : projects.length > 0 ? (
+      <>
+        <ProjectGrid projects={projects} locale={locale} />
+        <div class="mt-8">
+          <Button href={withLocale("/projects", locale)} variant="secondary">
+            {t.home.viewAllProjects}
+          </Button>
+        </div>
+      </>
+    ) : (
+      <EmptyState
+        title={t.home.noFeaturedTitle}
+        message={t.home.noFeaturedMessage}
+      />
+    )
+  }
+</Section>

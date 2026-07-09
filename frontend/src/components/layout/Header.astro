@@ -1,0 +1,110 @@
+---
+import {
+  copy,
+  stripLocaleFromPath,
+  supportedLocales,
+  switchLocalePath,
+  type Locale,
+  withLocale
+} from "../../lib/i18n";
+import { siteProfile, socialLinks } from "../../lib/siteContent";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const pathname = Astro.url.pathname;
+const pathWithoutLocale = stripLocaleFromPath(pathname);
+const query = Astro.url.search;
+const visibleSocialLinks = socialLinks.filter((link) => link.href.trim().length > 0);
+const t = copy[locale];
+const siteNav = [
+  {
+    label: t.nav.projects,
+    href: withLocale("/projects", locale),
+    activePath: "/projects"
+  },
+  {
+    label: t.nav.stack,
+    href: withLocale("/#stack", locale),
+    activePath: "/#stack"
+  },
+  {
+    label: t.nav.contact,
+    href: withLocale("/#contact", locale),
+    activePath: "/#contact"
+  }
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-border/80 bg-bg/90 backdrop-blur">
+  <div class="mx-auto flex min-h-16 w-full max-w-6xl items-center justify-between gap-4 px-5 sm:px-6 lg:px-8">
+    <a
+      href={withLocale("/", locale)}
+      class="shrink-0 text-sm font-semibold tracking-normal text-ink transition hover:text-primary-strong"
+      aria-label={t.nav.homeLabel}
+    >
+      {siteProfile.name}
+    </a>
+
+    <nav class="flex items-center gap-1 sm:gap-2" aria-label={t.nav.primary}>
+      {
+        siteNav.map((item) => {
+          const isCurrent =
+            item.activePath === "/projects"
+              ? pathWithoutLocale.startsWith("/projects")
+              : false;
+
+          return (
+            <a
+              href={item.href}
+              class:list={[
+                "rounded-full px-3 py-2 text-sm font-medium leading-none transition",
+                isCurrent
+                  ? "bg-surface text-ink"
+                  : "text-muted hover:bg-surface hover:text-ink"
+              ]}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+      {
+        visibleSocialLinks.map((item) => (
+          <a
+            href={item.href}
+            class="hidden rounded-full px-3 py-2 text-sm font-medium leading-none text-muted transition hover:bg-surface hover:text-ink sm:inline-flex"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <div
+        class="ml-1 flex rounded-full border border-border p-0.5"
+        aria-label={t.nav.language}
+      >
+        {supportedLocales.map((item) => {
+          const isCurrent = item === locale;
+          return (
+            <a
+              href={`${switchLocalePath(pathname, item)}${query}`}
+              aria-current={isCurrent ? "true" : undefined}
+              class:list={[
+                "rounded-full px-2.5 py-1.5 text-xs font-semibold leading-none transition",
+                isCurrent
+                  ? "bg-primary text-bg"
+                  : "text-muted hover:bg-surface hover:text-ink"
+              ]}
+            >
+              {item.toUpperCase()}
+            </a>
+          );
+        })}
+      </div>
+    </nav>
+  </div>
+</header>

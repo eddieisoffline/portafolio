@@ -1,0 +1,66 @@
+---
+import { copy, type Locale } from "../../lib/i18n";
+import { siteProfile } from "../../lib/siteContent";
+import Badge from "../ui/Badge.astro";
+import Section from "../ui/Section.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = copy[locale];
+const hasPhoto = siteProfile.photoSrc.trim().length > 0;
+---
+
+<Section
+  id="about"
+  eyebrow={t.about.eyebrow}
+  title={t.about.title}
+  class="border-t border-border"
+>
+  <div class="grid gap-10 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-start">
+    <div class="home-reveal overflow-hidden rounded-xl border border-border bg-surface">
+      {
+        hasPhoto ? (
+          <img
+            src={siteProfile.photoSrc}
+            alt={t.about.photoAlt}
+            loading="lazy"
+            class="aspect-[4/5] w-full object-cover grayscale"
+          />
+        ) : (
+          <div class="flex aspect-[4/5] items-end border-b border-border bg-surface-strong p-5">
+            <p class="font-mono text-xs uppercase tracking-[0.18em] text-subtle">
+              {t.about.photoPlaceholder}
+            </p>
+          </div>
+        )
+      }
+    </div>
+
+    <div class="home-reveal max-w-3xl">
+      <p class="text-xl leading-9 text-ink sm:text-2xl">
+        {t.about.body}
+      </p>
+
+      <div class="mt-8 border-t border-border pt-6">
+        <p class="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-primary">
+          {t.about.toolsLabel}
+        </p>
+        <div id="stack" class="grid scroll-mt-24 gap-5 sm:grid-cols-2">
+          {
+            t.stackGroups.map((group) => (
+              <div class="border-t border-border pt-5">
+                <h3 class="text-base font-semibold text-ink">{group.label}</h3>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  {group.tools.map((tool) => <Badge tone="muted">{tool}</Badge>)}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</Section>

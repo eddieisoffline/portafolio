@@ -1,0 +1,59 @@
+---
+export const prerender = false;
+
+import FeaturedProjects from "../../components/home/FeaturedProjects.astro";
+import AboutMe from "../../components/home/AboutMe.astro";
+import ContactSection from "../../components/home/ContactSection.astro";
+import Hero from "../../components/home/Hero.astro";
+import LatestWriting from "../../components/home/LatestWriting.astro";
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import { getProjects } from "../../lib/api";
+import { compareProjectsByDate } from "../../lib/formatDate";
+import { copy, isLocale, type Locale } from "../../lib/i18n";
+import { siteProfile } from "../../lib/siteContent";
+import type { Project } from "../../lib/types";
+
+const localeParam = Astro.params.locale;
+
+if (!isLocale(localeParam)) {
+  return Astro.redirect("/en", 302);
+}
+
+const locale: Locale = localeParam;
+let projects: Project[] = [];
+let hadProjectError = false;
+
+try {
+  projects = await getProjects(locale);
+} catch {
+  hadProjectError = true;
+}
+
+const sortedProjects = [...projects].sort(compareProjectsByDate);
+const featuredProjects = sortedProjects.filter((project) => project.featured);
+const homeProjects = (featuredProjects.length > 0
+  ? featuredProjects
+  : sortedProjects
+).slice(0, 4);
+const latestProjects = sortedProjects.slice(0, 3);
+---
+
+<BaseLayout
+  title={siteProfile.name}
+  description={copy[locale].hero.summary}
+  locale={locale}
+>
+  <Hero locale={locale} />
+  <FeaturedProjects
+    projects={homeProjects}
+    hadError={hadProjectError}
+    locale={locale}
+  />
+  <LatestWriting
+    projects={latestProjects}
+    hadError={hadProjectError}
+    locale={locale}
+  />
+  <AboutMe locale={locale} />
+  <ContactSection locale={locale} />
+</BaseLayout>

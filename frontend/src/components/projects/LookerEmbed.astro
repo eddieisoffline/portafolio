@@ -1,0 +1,30 @@
+---
+interface Props {
+  url?: string | null;
+  title?: string;
+}
+
+const { url, title = "Looker Studio dashboard" } = Astro.props;
+---
+
+{
+  url ? (
+    <section class="mt-12">
+      <div class="mb-4">
+        <h2 class="text-2xl font-semibold text-ink">Dashboard</h2>
+        <p class="mt-2 max-w-2xl text-sm leading-6 text-muted">
+          Embedded Looker Studio report for the project.
+        </p>
+      </div>
+      <div class="overflow-hidden rounded-xl border border-border bg-surface">
+        <iframe
+          src={url}
+          title={title}
+          loading="lazy"
+          class="aspect-[16/10] w-full"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </section>
+  ) : null
+}

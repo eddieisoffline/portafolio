@@ -1,0 +1,35 @@
+---
+import Footer from "./Footer.astro";
+import Header from "./Header.astro";
+import { copy, type Locale } from "../../lib/i18n";
+import "../../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  locale: Locale;
+}
+
+const { title, locale } = Astro.props;
+const description =
+  Astro.props.description ?? copy[locale].site.defaultDescription;
+const pageTitle = title.includes("Eddie") ? title : `${title} | Eddie`;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <Header locale={locale} />
+    <main class="content-reveal">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+  </body>
+</html>

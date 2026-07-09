@@ -1,0 +1,65 @@
+---
+import { formatDate } from "../../lib/formatDate";
+import { copy, type Locale } from "../../lib/i18n";
+import type { Project } from "../../lib/types";
+import Badge from "../ui/Badge.astro";
+
+interface Props {
+  project: Project;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const t = copy[locale];
+const links: Array<{ label: string; href: string | null | undefined }> = [
+  { label: t.projects.repo, href: project.repoUrl },
+  { label: t.projects.demo, href: project.demoUrl },
+  { label: t.projects.dashboard, href: project.dashboardUrl ?? null }
+].flatMap((link) =>
+  link.href ? [{ label: link.label, href: link.href }] : []
+);
+---
+
+<aside class="space-y-6 rounded-xl border border-border bg-surface p-5">
+  <div>
+    <p class="font-mono text-xs uppercase tracking-[0.18em] text-subtle">{t.projects.date}</p>
+    <p class="mt-2 text-sm font-medium text-ink">{formatDate(project.date, locale)}</p>
+  </div>
+
+  {
+    project.tools.length > 0 ? (
+      <div>
+        <p class="font-mono text-xs uppercase tracking-[0.18em] text-subtle">
+          {t.projects.tools}
+        </p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          {project.tools.map((tool) => (
+            <Badge tone="muted">{tool}</Badge>
+          ))}
+        </div>
+      </div>
+    ) : null
+  }
+
+  {
+    links.length > 0 ? (
+      <div>
+        <p class="font-mono text-xs uppercase tracking-[0.18em] text-subtle">
+          {t.projects.links}
+        </p>
+        <div class="mt-3 grid gap-2">
+          {links.map((link) => (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              class="rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted transition hover:border-primary/60 hover:text-primary-strong"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    ) : null
+  }
+</aside>

@@ -1,0 +1,14 @@
+---
+import { getLocaleFromRequest, withLocale } from "../../lib/i18n";
+
+export const prerender = false;
+
+const slug = Astro.params.slug ?? "";
+const destination = withLocale(
+  `/projects/${encodeURIComponent(slug)}`,
+  getLocaleFromRequest(Astro.request)
+);
+
+Astro.response.status = 302;
+Astro.response.headers.set("Location", destination);
+---

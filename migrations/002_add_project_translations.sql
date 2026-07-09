@@ -1,0 +1,2 @@
+ALTER TABLE projects
+  ADD COLUMN IF NOT EXISTS translations JSONB NOT NULL DEFAULT '{}'::jsonb;

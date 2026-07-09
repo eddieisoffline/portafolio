@@ -1,0 +1,37 @@
+---
+import type { Locale } from "../../lib/i18n";
+import { copy } from "../../lib/i18n";
+import type { Project } from "../../lib/types";
+import ProjectGrid from "../projects/ProjectGrid.astro";
+import EmptyState from "../ui/EmptyState.astro";
+import ErrorState from "../ui/ErrorState.astro";
+import Section from "../ui/Section.astro";
+
+interface Props {
+  projects: Project[];
+  hadError?: boolean;
+  locale: Locale;
+}
+
+const { projects, locale, hadError = false } = Astro.props;
+const t = copy[locale];
+---
+
+<Section
+  title={t.home.latestTitle}
+  description={t.home.latestDescription}
+  class="border-t border-border"
+>
+  {
+    hadError ? (
+      <ErrorState locale={locale} />
+    ) : projects.length > 0 ? (
+      <ProjectGrid projects={projects} locale={locale} />
+    ) : (
+      <EmptyState
+        title={t.home.latestEmptyTitle}
+        message={t.home.latestEmptyMessage}
+      />
+    )
+  }
+</Section>

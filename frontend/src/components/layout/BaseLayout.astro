@@ -1,4 +1,5 @@
 ---
+import Analytics from "@vercel/analytics/astro";
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
 import { copy, type Locale } from "../../lib/i18n";
@@ -31,5 +32,6 @@ const pageTitle = title.includes("Data & Analytics Engineer") ? title : `${title
       <slot />
     </main>
     <Footer locale={locale} />
+    <Analytics />
   </body>
 </html>

@@ -1,0 +1,68 @@
+---
+export const prerender = false;
+
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import Button from "../../components/ui/Button.astro";
+import { copy, isLocale, type Locale, withLocale } from "../../lib/i18n";
+
+const localeParam = Astro.params.locale;
+
+if (!isLocale(localeParam)) {
+  return Astro.redirect("/en/privacy", 302);
+}
+
+const locale: Locale = localeParam;
+const t = copy[locale];
+---
+
+<BaseLayout
+  title={t.privacy.pageTitle}
+  description={t.privacy.pageDescription}
+  locale={locale}
+  canonicalPath={withLocale("/privacy", locale)}
+>
+  <section class="mx-auto w-full max-w-6xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="font-mono text-xs uppercase tracking-[0.18em] text-primary">
+        {t.privacy.eyebrow}
+      </p>
+      <h1 class="mt-4 text-balance text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+        {t.privacy.headline}
+      </h1>
+      <p class="mt-5 text-lg leading-8 text-muted">
+        {t.privacy.intro}
+      </p>
+      <p class="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-subtle">
+        {t.privacy.updated}
+      </p>
+    </div>
+
+    <div class="mt-12 max-w-3xl">
+      {
+        t.privacy.sections.map((section) => (
+          <section class="border-t border-border py-7">
+            <h2 class="text-xl font-semibold leading-snug text-ink">
+              {section.title}
+            </h2>
+            <p class="mt-3 text-base leading-7 text-muted">
+              {section.body}
+            </p>
+            {"items" in section && section.items.length > 0 ? (
+              <ul class="mt-4 list-disc space-y-2 pl-5 text-base leading-7 text-muted">
+                {section.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            ) : null}
+          </section>
+        ))
+      }
+    </div>
+
+    <div class="mt-6">
+      <Button href={withLocale("/#contact", locale)} variant="secondary">
+        {t.privacy.contactCta}
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

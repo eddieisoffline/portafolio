@@ -40,22 +40,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 });
 
-const CONTENT_SECURITY_POLICY = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "object-src 'none'",
-  "frame-ancestors 'none'",
-  "form-action 'self'",
-  "img-src 'self' https: data: blob:",
-  "font-src 'self' data:",
-  "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline'",
-  "connect-src 'self' https: http://localhost:3000 http://127.0.0.1:3000 ws://localhost:* ws://127.0.0.1:*",
-  "frame-src https://lookerstudio.google.com https://lookerstudio.googleusercontent.com"
-].join("; ");
-
 function applySecurityHeaders(response: Response): void {
-  response.headers.set("Content-Security-Policy", CONTENT_SECURITY_POLICY);
+  response.headers.set("Content-Security-Policy", getContentSecurityPolicy());
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
@@ -63,6 +49,42 @@ function applySecurityHeaders(response: Response): void {
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=()"
   );
+
+  if (!import.meta.env.DEV) {
+    response.headers.set(
+      "Strict-Transport-Security",
+      "max-age=63072000; includeSubDomains; preload"
+    );
+  }
+}
+
+function getContentSecurityPolicy(): string {
+  const scriptSources = ["script-src", "'self'"];
+  const connectSources = ["connect-src", "'self'", "https:"];
+
+  if (import.meta.env.DEV) {
+    scriptSources.push("'unsafe-inline'");
+    connectSources.push(
+      "http://localhost:3000",
+      "http://127.0.0.1:3000",
+      "ws://localhost:*",
+      "ws://127.0.0.1:*"
+    );
+  }
+
+  return [
+    "default-src 'self'",
+    "base-uri 'self'",
+    "object-src 'none'",
+    "frame-ancestors 'none'",
+    "form-action 'self'",
+    "img-src 'self' https: data: blob:",
+    "font-src 'self' data:",
+    scriptSources.join(" "),
+    "style-src 'self' 'unsafe-inline'",
+    connectSources.join(" "),
+    "frame-src https://lookerstudio.google.com https://lookerstudio.googleusercontent.com"
+  ].join("; ");
 }
 
 async function handleRequest(
@@ -77,7 +99,8 @@ async function handleRequest(
       httpOnly: false,
       maxAge: 60 * 60 * 24 * 365,
       path: "/",
-      sameSite: "lax"
+      sameSite: "lax",
+      secure: !import.meta.env.DEV
     });
     return next();
   }

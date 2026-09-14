@@ -48,7 +48,7 @@ const ProjectFrontmatterSchema = z.object({
     .transform((value) => normalizeTools(value)),
   repo_url: z.string().url().optional(),
   demo_url: z.string().url().optional(),
-  cover_image: z.string().trim().min(1).optional(),
+  cover_image: z.string().trim().min(1).transform(normalizeCoverImage).optional(),
   featured: BooleanFrontmatterSchema,
   date: z
     .union([z.string(), z.date()])
@@ -207,6 +207,34 @@ function normalizeDate(value: string | Date | undefined): string | undefined {
   }
 
   return parsed.toISOString().slice(0, 10);
+}
+
+function normalizeCoverImage(value: string): string {
+  try {
+    const url = new URL(value);
+    const segments = url.pathname
+      .split("/")
+      .filter(Boolean)
+      .map((segment) => decodeURIComponent(segment));
+
+    if (
+      url.hostname !== "github.com" ||
+      url.searchParams.get("raw") !== "true" ||
+      segments.length < 5 ||
+      segments[2] !== "blob"
+    ) {
+      return value;
+    }
+
+    const [owner, repo, , ref, ...filePath] = segments;
+    const rawPath = [owner, repo, ref, ...filePath]
+      .map((segment) => encodeURIComponent(segment))
+      .join("/");
+
+    return `https://raw.githubusercontent.com/${rawPath}`;
+  } catch {
+    return value;
+  }
 }
 
 function normalizeLocalizedText(

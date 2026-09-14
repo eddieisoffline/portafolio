@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Eduardo Anica Gonzalez">
+  <rect width="64" height="64" rx="14" fill="#171717" />
+  <path d="M14 47V17h24v7H23v5h13v7H23v4h16v7H14Z" fill="#d2e18a" />
+  <path d="M42 47 51 17h-8l-9 30h8Z" fill="#f1f1ed" opacity=".92" />
+</svg>

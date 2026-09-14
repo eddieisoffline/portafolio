@@ -9,7 +9,7 @@ import LatestWriting from "../../components/home/LatestWriting.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
 import { getProjects } from "../../lib/api";
 import { compareProjectsByDate } from "../../lib/formatDate";
-import { copy, isLocale, type Locale } from "../../lib/i18n";
+import { copy, isLocale, type Locale, withLocale } from "../../lib/i18n";
 import { siteProfile } from "../../lib/siteContent";
 import type { Project } from "../../lib/types";
 
@@ -35,13 +35,19 @@ const homeProjects = (featuredProjects.length > 0
   ? featuredProjects
   : sortedProjects
 ).slice(0, 4);
-const latestProjects = sortedProjects.slice(0, 3);
+const homeProjectKeys = new Set(
+  homeProjects.map((project) => project.id ?? project.slug)
+);
+const latestProjects = sortedProjects
+  .filter((project) => !homeProjectKeys.has(project.id ?? project.slug))
+  .slice(0, 3);
 ---
 
 <BaseLayout
   title={siteProfile.name}
   description={copy[locale].hero.summary}
   locale={locale}
+  canonicalPath={withLocale("/", locale)}
 >
   <Hero locale={locale} />
   <FeaturedProjects

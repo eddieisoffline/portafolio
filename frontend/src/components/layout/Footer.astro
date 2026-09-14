@@ -20,6 +20,9 @@ const t = copy[locale];
       <a class="transition hover:text-ink" href={withLocale("/projects", locale)}>
         {t.nav.projects}
       </a>
+      <a class="transition hover:text-ink" href={withLocale("/privacy", locale)}>
+        {t.nav.privacy}
+      </a>
       {
         visibleSocialLinks.map((link) => (
           <a

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Eduardo Anica Gonzalez Data Analyst and Analytics Engineering">
+  <rect width="1200" height="630" fill="#171717" />
+  <path d="M0 0h1200v630H0z" fill="#171717" />
+  <path d="M80 82h1040" stroke="#3f422e" stroke-width="2" />
+  <path d="M80 548h1040" stroke="#3f422e" stroke-width="2" />
+  <path d="M80 82v466" stroke="#3f422e" stroke-width="2" />
+  <path d="M1120 82v466" stroke="#3f422e" stroke-width="2" />
+  <path d="M80 488h1040" stroke="#d2e18a" stroke-width="6" />
+  <text x="96" y="155" fill="#d2e18a" font-family="Consolas, Menlo, monospace" font-size="30" letter-spacing="4">
+    DATA ANALYTICS / ENGINEERING
+  </text>
+  <text x="96" y="302" fill="#f1f1ed" font-family="Arial, Helvetica, sans-serif" font-size="86" font-weight="700">
+    Eduardo Anica
+  </text>
+  <text x="96" y="390" fill="#f1f1ed" font-family="Arial, Helvetica, sans-serif" font-size="86" font-weight="700">
+    Gonzalez
+  </text>
+  <text x="96" y="455" fill="#b7b8ae" font-family="Arial, Helvetica, sans-serif" font-size="34">
+    Portafolio profesional de datos, BI, automatizacion y backend.
+  </text>
+</svg>

@@ -57,20 +57,26 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env): AppConfig {
 
 const DEVELOPMENT_CORS_ORIGINS = [
   "http://localhost:4321",
-  "http://127.0.0.1:4321",
-  "http://localhost:3000"
+  "http://127.0.0.1:4321"
 ];
 
 function getCorsOrigins(value: string | undefined, nodeEnv: string): string[] {
+  const isDevelopment = nodeEnv === "development";
   const configuredOrigins = splitList(value)
     .map(normalizeOrigin)
-    .filter((origin): origin is string => Boolean(origin));
+    .filter((origin): origin is string => {
+      if (!origin) {
+        return false;
+      }
+
+      return isDevelopment || !isLocalOrigin(origin);
+    });
 
   if (configuredOrigins.length > 0) {
     return configuredOrigins;
   }
 
-  if (nodeEnv === "development") {
+  if (isDevelopment) {
     return DEVELOPMENT_CORS_ORIGINS;
   }
 
@@ -92,6 +98,11 @@ function normalizeOrigin(value: string): string | undefined {
   } catch {
     return undefined;
   }
+}
+
+function isLocalOrigin(origin: string): boolean {
+  const { hostname } = new URL(origin);
+  return ["localhost", "127.0.0.1", "::1"].includes(hostname.toLowerCase());
 }
 
 function parseOptionalBoolean(value: string | undefined): boolean | undefined {

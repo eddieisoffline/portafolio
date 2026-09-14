@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
+import cors from "@fastify/cors";
 import fastify, {
-  type FastifyInstance,
-  type FastifyReply
+  type FastifyInstance
 } from "fastify";
 
 import type { AppConfig } from "./config/env.js";
@@ -30,15 +30,9 @@ type RequestError = Error & {
   statusCode?: number;
 };
 
-const CORS_ALLOWED_METHODS = "GET,POST,OPTIONS";
-const CORS_ALLOWED_HEADERS = [
-  "Content-Type",
-  "Authorization",
-  "x-request-id",
-  "x-github-event",
-  "x-hub-signature-256"
-].join(",");
-const CORS_MAX_AGE_SECONDS = "600";
+const CORS_ALLOWED_METHODS = ["GET"];
+const CORS_ALLOWED_HEADERS = ["Accept", "x-request-id"];
+const CORS_MAX_AGE_SECONDS = 600;
 let vercelAppPromise: Promise<FastifyInstance> | undefined;
 
 export default async function handler(
@@ -66,12 +60,19 @@ export async function createApp(options: CreateAppOptions): Promise<FastifyInsta
     requestIdHeader: "x-request-id"
   });
 
-  app.addHook("onRequest", async (request, reply) => {
-    applyCorsHeaders(reply, getHeaderValue(request.headers.origin), options.config);
-
-    if (request.method === "OPTIONS") {
-      return reply.code(204).send();
-    }
+  await app.register(cors, {
+    delegator: (request, callback) => {
+      callback(null, getCorsOptions({
+        allowedOrigins: options.config.corsOrigins,
+        method: request.method,
+        origin: getHeaderValue(request.headers.origin),
+        requestedMethod: getHeaderValue(
+          request.headers["access-control-request-method"]
+        ),
+        url: request.url
+      }));
+    },
+    strictPreflight: true
   });
 
   app.addHook("onSend", async (request, reply, payload) => {
@@ -155,27 +156,56 @@ async function createVercelApp(): Promise<FastifyInstance> {
   return app;
 }
 
-function applyCorsHeaders(
-  reply: FastifyReply,
-  origin: string | undefined,
-  config: AppConfig
-): void {
-  if (!origin) {
-    return;
-  }
-
-  reply.header("Vary", "Origin");
-  reply.header("Access-Control-Allow-Methods", CORS_ALLOWED_METHODS);
-  reply.header("Access-Control-Allow-Headers", CORS_ALLOWED_HEADERS);
-  reply.header("Access-Control-Max-Age", CORS_MAX_AGE_SECONDS);
-
-  if (config.corsOrigins.includes(origin)) {
-    reply.header("Access-Control-Allow-Origin", origin);
-  }
-}
-
 function getHeaderValue(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
+}
+
+function getCorsOptions(input: {
+  allowedOrigins: string[];
+  method: string;
+  origin: string | undefined;
+  requestedMethod: string | undefined;
+  url: string;
+}): {
+  origin: false | string;
+  methods?: string[];
+  allowedHeaders?: string[];
+  maxAge?: number;
+  credentials?: false;
+  optionsSuccessStatus?: number;
+} {
+  const method = input.method === "OPTIONS"
+    ? input.requestedMethod
+    : input.method;
+
+  if (
+    !input.origin ||
+    !input.allowedOrigins.includes(input.origin) ||
+    !method ||
+    !CORS_ALLOWED_METHODS.includes(method) ||
+    !isPublicProjectCorsPath(input.url)
+  ) {
+    return { origin: false };
+  }
+
+  return {
+    origin: input.origin,
+    methods: CORS_ALLOWED_METHODS,
+    allowedHeaders: CORS_ALLOWED_HEADERS,
+    maxAge: CORS_MAX_AGE_SECONDS,
+    credentials: false,
+    optionsSuccessStatus: 204
+  };
+}
+
+function isPublicProjectCorsPath(url: string): boolean {
+  const { pathname } = new URL(url, "http://localhost");
+
+  if (pathname === "/projects" || pathname === "/projects/") {
+    return true;
+  }
+
+  return /^\/projects\/[^/]+\/?$/.test(pathname);
 }
 
 function normalizeRequestError(error: unknown): RequestError {

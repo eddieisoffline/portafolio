@@ -1,20 +1,35 @@
 ---
-import Analytics from "@vercel/analytics/astro";
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
 import { copy, type Locale } from "../../lib/i18n";
+import { getSiteOrigin, toAbsoluteUrl } from "../../lib/siteUrl";
 import "../../styles/global.css";
 
 interface Props {
   title: string;
   description?: string;
   locale: Locale;
+  canonicalPath?: string;
+  image?: string;
+  type?: "website" | "article";
 }
 
-const { title, locale } = Astro.props;
+const {
+  title,
+  locale,
+  canonicalPath,
+  image = "/social-card.png",
+  type = "website"
+} = Astro.props;
 const description =
   Astro.props.description ?? copy[locale].site.defaultDescription;
 const pageTitle = title.includes("Data & Analytics Engineer") ? title : `${title} | Data & Analytics Engineer`;
+const siteOrigin = getSiteOrigin(Astro.url);
+const canonicalUrl = toAbsoluteUrl(canonicalPath ?? Astro.url.pathname, siteOrigin);
+const imageUrl = toAbsoluteUrl(image, siteOrigin);
+const ogLocale = locale === "es" ? "es_MX" : "en_US";
+const alternateLocale = locale === "es" ? "en_US" : "es_MX";
+const shouldLoadAnalytics = !import.meta.env.DEV;
 ---
 
 <!doctype html>
@@ -24,6 +39,22 @@ const pageTitle = title.includes("Data & Analytics Engineer") ? title : `${title
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#171717" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:site_name" content="Eduardo Anica Gonzalez" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={alternateLocale} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
     <title>{pageTitle}</title>
   </head>
   <body>
@@ -32,6 +63,16 @@ const pageTitle = title.includes("Data & Analytics Engineer") ? title : `${title
       <slot />
     </main>
     <Footer locale={locale} />
-    <Analytics />
+    {
+      shouldLoadAnalytics ? (
+        <script
+          is:inline
+          defer
+          src="/_vercel/insights/script.js"
+          data-sdkn="@vercel/analytics/astro"
+          data-sdkv="1.6.1"
+        ></script>
+      ) : null
+    }
   </body>
 </html>

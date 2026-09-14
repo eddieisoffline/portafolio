@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { createApp } from "../src/app.js";
+import { loadEnv } from "../src/config/env.js";
 import type { AppConfig } from "../src/config/env.js";
 import type { ProjectRepository } from "../src/db/projectRepository.js";
 import { clearRateLimitBuckets } from "../src/security/rateLimit.js";
@@ -59,6 +60,10 @@ describe("app error handling", () => {
 
 describe("CORS", () => {
   const allowedOrigin = "https://portfolio.example";
+  const projectRepository = {
+    list: async () => [],
+    findBySlug: async () => null
+  } as unknown as ProjectRepository;
 
   it("returns CORS headers for an allowed preflight request", async () => {
     const app = await createApp({
@@ -66,7 +71,7 @@ describe("CORS", () => {
         ...config,
         corsOrigins: [allowedOrigin]
       },
-      projectRepository: {} as ProjectRepository,
+      projectRepository,
       githubClient: {} as GitHubClient
     });
 
@@ -75,19 +80,45 @@ describe("CORS", () => {
       url: "/projects",
       headers: {
         origin: allowedOrigin,
-        "access-control-request-method": "GET"
+        "access-control-request-method": "GET",
+        "access-control-request-headers": "x-request-id"
       }
     });
 
     expect(response.statusCode).toBe(204);
     expect(response.headers["access-control-allow-origin"]).toBe(allowedOrigin);
-    expect(response.headers["access-control-allow-methods"]).toBe(
-      "GET,POST,OPTIONS"
-    );
-    expect(response.headers["access-control-allow-headers"]).toContain(
-      "Authorization"
-    );
+    expect(response.headers["access-control-allow-methods"]).toBe("GET");
+    expect(response.headers["access-control-allow-methods"]).not.toContain("POST");
+    expect(response.headers["access-control-allow-headers"]).toContain("Accept");
+    expect(response.headers["access-control-allow-headers"]).toContain("x-request-id");
+    expect(response.headers["access-control-allow-headers"]).not.toContain("Authorization");
+    expect(response.headers["access-control-allow-credentials"]).toBeUndefined();
     expect(response.headers.vary).toBe("Origin");
+
+    await app.close();
+  });
+
+  it("does not allow preflight requests for methods outside the public API", async () => {
+    const app = await createApp({
+      config: {
+        ...config,
+        corsOrigins: [allowedOrigin]
+      },
+      projectRepository,
+      githubClient: {} as GitHubClient
+    });
+
+    const response = await app.inject({
+      method: "OPTIONS",
+      url: "/projects",
+      headers: {
+        origin: allowedOrigin,
+        "access-control-request-method": "POST"
+      }
+    });
+
+    expect(response.headers["access-control-allow-origin"]).toBeUndefined();
+    expect(response.headers["access-control-allow-methods"]).toBeUndefined();
 
     await app.close();
   });
@@ -98,13 +129,13 @@ describe("CORS", () => {
         ...config,
         corsOrigins: [allowedOrigin]
       },
-      projectRepository: {} as ProjectRepository,
+      projectRepository,
       githubClient: {} as GitHubClient
     });
 
     const response = await app.inject({
       method: "GET",
-      url: "/health",
+      url: "/projects",
       headers: {
         origin: allowedOrigin
       }
@@ -123,13 +154,13 @@ describe("CORS", () => {
         ...config,
         corsOrigins: [allowedOrigin]
       },
-      projectRepository: {} as ProjectRepository,
+      projectRepository,
       githubClient: {} as GitHubClient
     });
 
     const response = await app.inject({
       method: "GET",
-      url: "/health",
+      url: "/projects",
       headers: {
         origin: "https://not-allowed.example"
       }
@@ -137,9 +168,76 @@ describe("CORS", () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.headers["access-control-allow-origin"]).toBeUndefined();
-    expect(response.headers.vary).toBe("Origin");
 
     await app.close();
+  });
+
+  it("does not expose CORS headers on non-project endpoints", async () => {
+    const app = await createApp({
+      config: {
+        ...config,
+        corsOrigins: [allowedOrigin]
+      },
+      projectRepository,
+      githubClient: {} as GitHubClient
+    });
+
+    const response = await app.inject({
+      method: "POST",
+      url: "/sync/repo",
+      headers: {
+        origin: allowedOrigin
+      },
+      payload: {
+        owner: "tests",
+        repo: "repo",
+        paths: []
+      }
+    });
+
+    expect(response.statusCode).toBe(401);
+    expect(response.headers["access-control-allow-origin"]).toBeUndefined();
+    expect(response.headers["access-control-allow-methods"]).toBeUndefined();
+
+    await app.close();
+  });
+});
+
+describe("environment CORS defaults", () => {
+  const requiredEnv = {
+    GITHUB_WEBHOOK_SECRET: "secret",
+    SYNC_TOKEN: "sync-token"
+  };
+
+  it("uses local frontend origins only in development", () => {
+    const developmentConfig = loadEnv({
+      ...requiredEnv,
+      NODE_ENV: "development"
+    });
+
+    expect(developmentConfig.corsOrigins).toEqual([
+      "http://localhost:4321",
+      "http://127.0.0.1:4321"
+    ]);
+  });
+
+  it("does not allow localhost by default in production", () => {
+    const productionConfig = loadEnv({
+      ...requiredEnv,
+      NODE_ENV: "production"
+    });
+
+    expect(productionConfig.corsOrigins).toEqual([]);
+  });
+
+  it("filters configured localhost origins outside development", () => {
+    const productionConfig = loadEnv({
+      ...requiredEnv,
+      NODE_ENV: "production",
+      CORS_ORIGINS: "http://localhost:4321,https://portfolio.example/path"
+    });
+
+    expect(productionConfig.corsOrigins).toEqual(["https://portfolio.example"]);
   });
 });
 

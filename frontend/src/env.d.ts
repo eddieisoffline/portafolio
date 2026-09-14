@@ -3,6 +3,7 @@
 
 interface ImportMetaEnv {
   readonly PUBLIC_API_URL?: string;
+  readonly PUBLIC_SITE_URL?: string;
   readonly LOG_LEVEL?: "debug" | "info" | "warn" | "error" | "silent";
   readonly RESEND_API_KEY?: string;
   readonly CONTACT_TO_EMAIL?: string;

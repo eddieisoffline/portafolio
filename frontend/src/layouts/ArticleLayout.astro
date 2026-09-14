@@ -18,6 +18,9 @@ const t = copy[locale];
   title={project.title}
   description={project.summary ?? project.title}
   locale={locale}
+  canonicalPath={withLocale(`/projects/${project.slug}`, locale)}
+  image={project.coverImage ?? undefined}
+  type="article"
 >
   <article class="mx-auto w-full max-w-6xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8">
     <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">

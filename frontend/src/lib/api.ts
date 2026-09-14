@@ -1,7 +1,7 @@
 import type { Project } from "./types";
 import type { Locale } from "./i18n";
 
-const DEFAULT_API_URL = "http://localhost:3000";
+const DEFAULT_DEVELOPMENT_API_URL = "http://localhost:3000";
 const REQUEST_TIMEOUT_MS = 8000;
 
 export type ApiErrorCode = "http" | "invalid" | "network" | "timeout";
@@ -48,10 +48,39 @@ export async function getProject(
 
 function getApiBaseUrl(): string {
   const configuredUrl = import.meta.env.PUBLIC_API_URL?.trim();
-  return (configuredUrl && configuredUrl.length > 0
+  const apiUrl = configuredUrl && configuredUrl.length > 0
     ? configuredUrl
-    : DEFAULT_API_URL
-  ).replace(/\/+$/, "");
+    : import.meta.env.DEV
+      ? DEFAULT_DEVELOPMENT_API_URL
+      : "";
+
+  if (!apiUrl) {
+    throw new ApiError("PUBLIC_API_URL is required in production.", "invalid");
+  }
+
+  let parsedUrl: URL;
+
+  try {
+    parsedUrl = new URL(apiUrl);
+  } catch {
+    throw new ApiError("PUBLIC_API_URL must be an absolute URL.", "invalid");
+  }
+
+  if (!import.meta.env.DEV) {
+    if (parsedUrl.protocol !== "https:") {
+      throw new ApiError("PUBLIC_API_URL must use HTTPS in production.", "invalid");
+    }
+
+    if (isLocalHostname(parsedUrl.hostname)) {
+      throw new ApiError("PUBLIC_API_URL cannot point to localhost in production.", "invalid");
+    }
+  }
+
+  return parsedUrl.toString().replace(/\/+$/, "");
+}
+
+function isLocalHostname(hostname: string): boolean {
+  return ["localhost", "127.0.0.1", "::1"].includes(hostname.toLowerCase());
 }
 
 async function fetchJson(path: string): Promise<unknown> {

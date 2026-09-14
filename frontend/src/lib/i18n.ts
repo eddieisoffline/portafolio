@@ -64,6 +64,7 @@ export const copy = {
       stack: "Stack",
       impact: "Impacto",
       contact: "Contacto",
+      privacy: "Privacidad",
       homeLabel: "Inicio de Eduardo Anica González",
       primary: "Navegación principal",
       language: "Seleccionar idioma"
@@ -88,7 +89,7 @@ export const copy = {
       noFeaturedTitle: "Aún no hay proyectos destacados.",
       noFeaturedMessage:
         "Sincroniza proyectos desde el backend y marca los casos más sólidos como destacados.",
-      latestTitle: "Últimos case studies",
+      latestTitle: "Últimos casos de estudio",
       latestDescription:
         "Proyectos recientes con contexto técnico, herramientas utilizadas y explicación del problema resuelto.",
       latestEmptyTitle: "Aún no hay case studies recientes.",
@@ -103,7 +104,7 @@ export const copy = {
       eyebrow: "Perfil",
       title: "Trabajo entre análisis de datos, automatización y BI.",
       body:
-        "Soy Analista de Datos con experiencia construyendo pipelines, dashboards, reportes automatizados y herramientas internas para equipos de operación, servicio y negocio. Trabajo principalmente con Python, SQL, pandas, Power BI, DAX, Looker Studio, PostgreSQL, BigQuery y APIs. Me interesa crear soluciones que no sólo respondan una pregunta puntual, sino que dejen un proceso más claro, repetible y fácil de mantener.",
+        "Soy Analista de Datos con experiencia construyendo pipelines, dashboards, reportes automatizados y herramientas internas para equipos de operación, servicio y negocio. Trabajo principalmente con Python, SQL, pandas, Power BI, DAX, Looker Studio, PostgreSQL, BigQuery y APIs. Me interesa crear soluciones que no solo respondan una pregunta puntual, sino que dejen un proceso más claro, repetible y fácil de mantener.",
       photoAlt: "Retrato de Eduardo Anica González",
       photoPlaceholder: "Foto pendiente",
       toolsLabel: "Herramientas por área"
@@ -132,13 +133,62 @@ export const copy = {
       validationError:
         "Revisa los campos requeridos antes de enviar."
     },
+    privacy: {
+      pageTitle: "Privacidad",
+      pageDescription:
+        "Cómo este portafolio profesional trata datos personales, contacto, analítica y datasets demostrativos.",
+      eyebrow: "Privacidad",
+      headline: "Uso responsable de datos en este portafolio.",
+      intro:
+        "Este sitio web es un portafolio profesional orientado a Data Analytics, Data Engineering y Cloud.",
+      updated: "Actualizada: 1 de septiembre de 2026",
+      contactCta: "Ir a contacto",
+      sections: [
+        {
+          title: "Datos recopilados",
+          body:
+            "El sitio recopila únicamente la información que envías de forma voluntaria mediante el formulario de contacto:",
+          items: ["Nombre.", "Correo electrónico.", "Mensaje."]
+        },
+        {
+          title: "Finalidad",
+          body:
+            "La información del formulario se utiliza exclusivamente para responder consultas, contacto profesional, posibles oportunidades laborales o colaboraciones."
+        },
+        {
+          title: "Conservación",
+          body:
+            "Los datos se conservan solo durante el tiempo necesario para atender la comunicación correspondiente."
+        },
+        {
+          title: "Compartición de datos",
+          body:
+            "Los datos personales no se venden. Resend procesa técnicamente los mensajes enviados por el formulario. Vercel aloja el sitio y proporciona analítica agregada del uso del portafolio."
+        },
+        {
+          title: "Cookies y analítica",
+          body:
+            "Este sitio usa una cookie funcional llamada portfolio_locale para recordar el idioma seleccionado. También utiliza Vercel Web Analytics, que ofrece métricas agregadas y no usa cookies para identificar visitantes."
+        },
+        {
+          title: "Proyectos y datasets",
+          body:
+            "Los proyectos publicados utilizan datos públicos, sintéticos, anonimizados o preparados específicamente para demostraciones. No se publican credenciales, información confidencial de empresas ni información personal identificable procedente de proyectos laborales."
+        },
+        {
+          title: "Derechos y contacto",
+          body:
+            "Para solicitudes relacionadas con tus datos personales, utiliza el formulario de contacto de este sitio o el perfil de LinkedIn enlazado en el footer."
+        }
+      ]
+    },
     projects: {
       pageTitle: "Proyectos",
       pageDescription:
         "Proyectos de análisis de datos, BI, automatización, dashboards, backend y casos de estudio.",
       eyebrow: "Casos de estudio",
       headline:
-        "Proyectos enfocados en resolver problemas con datos, no sólo en mostrar gráficas.",
+        "Proyectos enfocados en resolver problemas con datos, no solo en mostrar gráficas.",
       description:
         "Explora proyectos construidos con datos reales, scripts, dashboards, APIs, modelos y documentación técnica. Cada caso busca explicar el problema, el proceso y el resultado.",
       filterLabel: "Filtrar proyectos por herramienta",
@@ -250,6 +300,7 @@ export const copy = {
       stack: "Stack",
       impact: "Impact",
       contact: "Contact",
+      privacy: "Privacy",
       homeLabel: "Eduardo Anica González home",
       primary: "Primary navigation",
       language: "Select language"
@@ -317,6 +368,55 @@ export const copy = {
         "The message could not be sent. Try again or reach me through LinkedIn.",
       validationError:
         "Check the required fields before sending."
+    },
+    privacy: {
+      pageTitle: "Privacy",
+      pageDescription:
+        "How this professional portfolio handles personal data, contact messages, analytics, and demo datasets.",
+      eyebrow: "Privacy",
+      headline: "Responsible data practices for this portfolio.",
+      intro:
+        "This website is a professional portfolio focused on Data Analytics, Data Engineering, and Cloud.",
+      updated: "Updated: September 1, 2026",
+      contactCta: "Go to contact",
+      sections: [
+        {
+          title: "Data collected",
+          body:
+            "The site only collects information you voluntarily send through the contact form:",
+          items: ["Name.", "Email address.", "Message."]
+        },
+        {
+          title: "Purpose",
+          body:
+            "Contact form information is used only to answer inquiries, support professional contact, and discuss potential job opportunities or collaborations."
+        },
+        {
+          title: "Retention",
+          body:
+            "Data is kept only for the time needed to handle the related communication."
+        },
+        {
+          title: "Data sharing",
+          body:
+            "Personal data is not sold. Resend technically processes messages sent through the contact form. Vercel hosts the site and provides aggregated portfolio analytics."
+        },
+        {
+          title: "Cookies and analytics",
+          body:
+            "This site uses a functional cookie named portfolio_locale to remember the selected language. It also uses Vercel Web Analytics, which provides aggregated metrics and does not use cookies to identify visitors."
+        },
+        {
+          title: "Projects and datasets",
+          body:
+            "Published projects use public, synthetic, anonymized, or demonstration-specific data. Credentials, confidential company information, and personally identifiable information from professional projects are not published."
+        },
+        {
+          title: "Rights and contact",
+          body:
+            "For requests related to your personal data, use this site's contact form or the LinkedIn profile linked in the footer."
+        }
+      ]
     },
     projects: {
       pageTitle: "Projects",

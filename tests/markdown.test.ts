@@ -132,4 +132,19 @@ cover_image: /images/projects/coffee.png
 
     expect(parsed.metadata.coverImage).toBe("/images/projects/coffee.png");
   });
+
+  it("normalizes GitHub blob cover image URLs to raw GitHub URLs", () => {
+    const parsed = parseProjectMarkdown(`---
+title: Coffee Dashboard
+slug: coffee-dashboard
+cover_image: https://github.com/eddieisoffline/portfolio/blob/main/images/coffee.png?raw=true
+---
+
+# Coffee Dashboard
+`);
+
+    expect(parsed.metadata.coverImage).toBe(
+      "https://raw.githubusercontent.com/eddieisoffline/portfolio/main/images/coffee.png"
+    );
+  });
 });

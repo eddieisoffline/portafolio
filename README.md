@@ -24,6 +24,7 @@ Copia `frontend/.env.example` a `frontend/.env`:
 
 ```bash
 PUBLIC_API_URL=http://localhost:3000
+PUBLIC_SITE_URL=http://localhost:4321
 RESEND_API_KEY=
 CONTACT_TO_EMAIL=
 CONTACT_FROM_EMAIL=
@@ -33,6 +34,10 @@ CONTACT_FROM_EMAIL=
 
 - `GET /projects?lang=es|en`
 - `GET /projects/:slug?lang=es|en`
+
+En produccion, `PUBLIC_API_URL` debe usar HTTPS y no debe apuntar a `localhost`.
+`PUBLIC_SITE_URL` se usa para canonical URLs, Open Graph, Twitter Card, `robots.txt`
+y `sitemap.xml`. Si no se configura, el frontend usa el origen de la request.
 
 Las variables `RESEND_API_KEY`, `CONTACT_TO_EMAIL` y `CONTACT_FROM_EMAIL` son privadas del servidor Astro. No uses prefijo `PUBLIC_` para ellas.
 
@@ -84,6 +89,16 @@ Si un proyecto incluye `dashboardUrl`, la pagina de detalle renderiza un iframe 
 
 `contentHtml` se renderiza en el frontend solo dentro de `ProseContent.astro`. Ese HTML debe venir sanitizado desde el backend. El backend actual usa `markdown-it` con HTML crudo desactivado y `sanitize-html` como segunda barrera contra XSS.
 
+## Security & Privacy
+
+- Las APIs usan una politica CORS restrictiva: solo los origenes listados en `CORS_ORIGINS` pueden leer `GET /projects` y `GET /projects/:slug` desde el navegador.
+- Los origenes permitidos cambian entre desarrollo y produccion. En desarrollo se permiten los origenes locales del frontend Astro; en produccion configura solo el dominio publico del portafolio, sin wildcard `*`.
+- Los secretos y credenciales se gestionan mediante variables de entorno. Mantén `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`, `GITHUB_WEBHOOK_SECRET`, `GITHUB_TOKEN` y `SYNC_TOKEN` sin prefijo `PUBLIC_` y fuera de Git.
+- El formulario de contacto recopila solo los datos enviados voluntariamente y usa Resend para procesar el envio del mensaje. Tambien tiene honeypot y rate limiting del lado servidor.
+- El sitio usa Vercel Web Analytics para metricas agregadas sin cookies de tracking, y una cookie funcional `portfolio_locale` para recordar el idioma.
+- Los datasets demostrativos publicados deben ser publicos, sinteticos, anonimizados o preparados especificamente para demostraciones. No publiques credenciales, informacion confidencial de empresas ni datos personales identificables de proyectos laborales.
+- La politica de privacidad esta disponible en `/es/privacy` y `/en/privacy`.
+
 ---
 
 # Backend
@@ -117,6 +132,7 @@ Copia `.env.example` a `.env` y ajusta valores:
 
 ```bash
 PORT=3000
+CORS_ORIGINS=http://localhost:4321,http://127.0.0.1:4321
 DATABASE_URL=postgres://portfolio:portfolio@localhost:5432/portfolio
 TEST_DATABASE_URL=postgres://portfolio:portfolio@localhost:5433/portfolio_test
 GITHUB_WEBHOOK_SECRET=change-me
@@ -127,6 +143,7 @@ ALLOWED_REPOS=your-user/your-project,another-user/another-project
 
 Notas:
 
+- `CORS_ORIGINS` es una lista separada por comas. En produccion debe contener solo el dominio publico del frontend, por ejemplo `https://tu-dominio.com,https://www.tu-dominio.com`.
 - `GITHUB_TOKEN` es opcional para repos publicos, pero recomendado por rate limit y necesario para repos privados.
 - `ALLOWED_REPOS` protege `POST /sync/repo`; usa nombres tipo `owner/repo`.
 - `SYNC_TOKEN` se envia como `Authorization: Bearer <SYNC_TOKEN>`.
@@ -225,6 +242,8 @@ Campos opcionales:
 - `date`
 
 Si `repo_url` falta, se usa la URL del repo de GitHub.
+Si `cover_image` usa una URL de GitHub tipo `github.com/.../blob/...?...raw=true`,
+el backend la normaliza a `raw.githubusercontent.com` durante la sincronizacion.
 
 Para contenido bilingue, usa bloques por idioma:
 

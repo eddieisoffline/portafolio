@@ -92,9 +92,6 @@ export const copy = {
       latestTitle: "Últimos casos de estudio",
       latestDescription:
         "Proyectos recientes con contexto técnico, herramientas utilizadas y explicación del problema resuelto.",
-      latestEmptyTitle: "Aún no hay case studies recientes.",
-      latestEmptyMessage:
-        "Cuando el backend sincronice proyectos, los más recientes aparecerán aquí.",
       impactTitle:
         "El impacto se nota cuando el trabajo manual baja y las decisiones son más claras.",
       impactDescription:
@@ -328,9 +325,6 @@ export const copy = {
       latestTitle: "Latest case studies",
       latestDescription:
         "Recent projects with technical context, tools used, and a clear explanation of the problem solved.",
-      latestEmptyTitle: "No recent case studies yet.",
-      latestEmptyMessage:
-        "When the backend syncs projects, the newest work will appear here.",
       impactTitle:
         "Impact shows up when manual work decreases and decisions become clearer.",
       impactDescription:

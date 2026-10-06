@@ -55,11 +55,9 @@ const latestProjects = sortedProjects
     hadError={hadProjectError}
     locale={locale}
   />
-  <LatestWriting
-    projects={latestProjects}
-    hadError={hadProjectError}
-    locale={locale}
-  />
+  {latestProjects.length > 0 && (
+    <LatestWriting projects={latestProjects} locale={locale} />
+  )}
   <AboutMe locale={locale} />
   <ContactSection locale={locale} />
 </BaseLayout>

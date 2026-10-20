@@ -56,13 +56,12 @@ export const copy = {
   es: {
     site: {
       defaultDescription:
-        "Portafolio profesional de análisis de datos, BI, automatización y productos internos.",
+        "Proyectos de ingeniería y análisis de datos con datos públicos. Cada caso de estudio incluye el código y lo que se midió.",
       unavailableTitle: "Proyecto no disponible"
     },
     nav: {
       projects: "Proyectos",
       stack: "Stack",
-      impact: "Impacto",
       contact: "Contacto",
       privacy: "Privacidad",
       homeLabel: "Inicio de Eduardo Anica González",
@@ -70,47 +69,41 @@ export const copy = {
       language: "Seleccionar idioma"
     },
     hero: {
-      role: "Data Analyst / Analytics Engineering",
-      headline:
-        "Construyo soluciones de datos para entender, medir y mejorar procesos.",
+      role: "Data & Analytics Engineer",
+      headline: "Llevo datos de la fuente al tablero y pruebo cada paso.",
       summary:
-        "Trabajo con Python, SQL, BI, automatización y backend para convertir información dispersa en reportes, pipelines y herramientas que ayudan a tomar mejores decisiones.",
+        "Trabajo sobre todo con Python y SQL, y despliego en Google Cloud con Terraform. Los proyectos de este sitio usan datos públicos, y cada caso de estudio muestra las cifras que se midieron con ellos.",
       projectsCta: "Ver proyectos",
       contactCta: "Contactar",
       noteLabel: "Forma de trabajo",
       professionalNote:
-        "Me enfoco en resolver problemas reales de operación: limpiar datos, conectar fuentes, automatizar reportes, diseñar KPIs y construir dashboards o servicios internos que sean claros, mantenibles y útiles para los equipos."
+        "Casi todo el trabajo pasa antes del tablero: entender de dónde salen los datos, validarlos y automatizar la carga para que nadie tenga que armar el reporte a mano."
     },
     home: {
       featuredTitle: "Casos de estudio destacados",
       featuredDescription:
-        "Proyectos seleccionados por impacto, claridad técnica y utilidad práctica.",
+        "Proyectos con el código en GitHub, la arquitectura explicada y las cifras que se midieron.",
       viewAllProjects: "Ver todos los proyectos",
-      noFeaturedTitle: "Aún no hay proyectos destacados.",
+      noFeaturedTitle: "Todavía no hay proyectos publicados.",
       noFeaturedMessage:
-        "Sincroniza proyectos desde el backend y marca los casos más sólidos como destacados.",
+        "Los proyectos se están actualizando. Mientras tanto, el código está en mi GitHub.",
       latestTitle: "Últimos casos de estudio",
-      latestDescription:
-        "Proyectos recientes con contexto técnico, herramientas utilizadas y explicación del problema resuelto.",
-      impactTitle:
-        "El impacto se nota cuando el trabajo manual baja y las decisiones son más claras.",
-      impactDescription:
-        "Este portafolio muestra proyectos donde los datos pasan de estar dispersos a convertirse en procesos, reportes o herramientas que se pueden usar."
+      latestDescription: "Los proyectos más recientes que no aparecen arriba."
     },
     about: {
       eyebrow: "Perfil",
-      title: "Trabajo entre análisis de datos, automatización y BI.",
+      title: "Análisis de datos, BI y los pipelines que hay detrás.",
       body:
-        "Soy Analista de Datos con experiencia construyendo pipelines, dashboards, reportes automatizados y herramientas internas para equipos de operación, servicio y negocio. Trabajo principalmente con Python, SQL, pandas, Power BI, DAX, Looker Studio, PostgreSQL, BigQuery y APIs. Me interesa crear soluciones que no solo respondan una pregunta puntual, sino que dejen un proceso más claro, repetible y fácil de mantener.",
+        "Tengo experiencia construyendo pipelines, dashboards, reportes automáticos y herramientas internas para equipos de operación, servicio y negocio. Uso sobre todo Python, SQL, pandas, Power BI, DAX, Looker Studio, PostgreSQL, BigQuery y APIs. Lo que más me importa de un proyecto es lo que queda después: un proceso que cualquiera del equipo pueda volver a correr y revisar.",
       photoAlt: "Retrato de Eduardo Anica González",
       photoPlaceholder: "Foto pendiente",
       toolsLabel: "Herramientas por área"
     },
     contact: {
       eyebrow: "Contacto",
-      title: "Hablemos de datos que necesitan volverse útiles.",
+      title: "¿Quieres platicar de un proyecto o de una vacante?",
       description:
-        "Puedo apoyar en proyectos de análisis, BI, automatización, limpieza de datos, pipelines, reporting ejecutivo o herramientas internas para equipos que necesitan ordenar información y tomar mejores decisiones.",
+        "Escríbeme por este formulario o por LinkedIn. Si es sobre un proyecto, ayuda saber de dónde vienen los datos y qué decisión tienen que apoyar.",
       linksLabel: "Perfiles",
       formTitle: "Enviar mensaje",
       nameLabel: "Nombre",
@@ -118,13 +111,11 @@ export const copy = {
       emailLabel: "Email",
       emailPlaceholder: "tu@email.com",
       messageLabel: "Mensaje",
-      messagePlaceholder:
-        "Cuéntame brevemente qué necesitas analizar, automatizar o mejorar.",
+      messagePlaceholder: "Cuéntame qué necesitas y con qué datos cuentas.",
       companyLabel: "Empresa",
       submit: "Enviar mensaje",
       submitting: "Enviando...",
-      success:
-        "Mensaje enviado. Te responderé cuando revise el contexto.",
+      success: "Mensaje enviado. Gracias, te respondo pronto.",
       error:
         "No se pudo enviar el mensaje. Intenta de nuevo o escríbeme por LinkedIn.",
       validationError:
@@ -182,25 +173,23 @@ export const copy = {
     projects: {
       pageTitle: "Proyectos",
       pageDescription:
-        "Proyectos de análisis de datos, BI, automatización, dashboards, backend y casos de estudio.",
+        "Casos de estudio de ingeniería y análisis de datos, con el código y las cifras medidas de cada proyecto.",
       eyebrow: "Casos de estudio",
-      headline:
-        "Proyectos enfocados en resolver problemas con datos, no solo en mostrar gráficas.",
+      headline: "Cada proyecto, con su código y lo que se midió.",
       description:
-        "Explora proyectos construidos con datos reales, scripts, dashboards, APIs, modelos y documentación técnica. Cada caso busca explicar el problema, el proceso y el resultado.",
+        "Cada caso explica el problema, cómo está armado el pipeline y qué se comprobó con datos reales. El código está en GitHub y puedes filtrar por herramienta.",
       filterLabel: "Filtrar proyectos por herramienta",
       all: "Todos",
       featured: "Destacado",
-      readCaseStudy: "Leer case study",
+      readCaseStudy: "Leer caso de estudio",
       repo: "Repo",
       demo: "Demo",
       dashboard: "Dashboard",
       emptyTitle: "Ningún proyecto coincide con este filtro.",
-      emptyMessage:
-        "Elige otra herramienta o limpia el filtro para ver todos los proyectos devueltos por la API.",
+      emptyMessage: "Prueba con otra herramienta o vuelve a la lista completa.",
       missingSlug: "Falta el slug del proyecto.",
-      notFound: "No se encontró el proyecto solicitado.",
-      loadError: "No se pudo cargar el proyecto desde la API del backend.",
+      notFound: "Ese proyecto no existe o ya no está publicado.",
+      loadError: "No se pudo cargar este proyecto. Intenta de nuevo en unos minutos.",
       unavailable: "Proyecto no disponible",
       back: "Volver a proyectos",
       date: "Fecha",
@@ -210,78 +199,60 @@ export const copy = {
       dashboardTitle: "Dashboard de Looker Studio de {title}"
     },
     states: {
-      dataUnavailable: "Los datos del portafolio no están disponibles.",
+      dataUnavailable: "Los proyectos no cargaron.",
       dataUnavailableMessage:
-        "Verifica que el backend esté corriendo y que PUBLIC_API_URL apunte a la API correcta.",
-      noContentTitle: "Este case study aún no tiene contenido.",
+        "Intenta en unos minutos. Mientras tanto, el código de cada proyecto está en mi GitHub.",
+      noContentTitle: "Este caso de estudio todavía no tiene contenido.",
       noContentMessage:
-        "Sincroniza un archivo Markdown desde el backend para renderizar HTML sanitizado aquí.",
+        "Vuelve en unos minutos o revisa el repositorio del proyecto.",
       undated: "Sin fecha"
     },
     stackGroups: [
       {
-        label: "Data pipelines",
+        label: "Pipelines y datos",
         tools: [
           "Python",
           "pandas",
           "SQL",
           "PostgreSQL",
-          "BigQuery",
-          "ETL"
+          "DuckDB",
+          "Spark",
+          "Delta Lake"
         ]
       },
       {
-        label: "Analytics & BI",
+        label: "Nube e infraestructura",
+        tools: [
+          "BigQuery",
+          "Cloud Run",
+          "Cloud Storage",
+          "Terraform",
+          "Docker",
+          "GitHub Actions"
+        ]
+      },
+      {
+        label: "BI y reportes",
         tools: [
           "Power BI",
           "DAX",
           "Looker Studio",
-          "Diseño de KPIs",
-          "Reporting",
-          "Forecasting"
+          "Google Sheets",
+          "Diseño de KPIs"
         ]
       },
       {
-        label: "Automatización",
+        label: "Modelado y automatización",
         tools: [
+          "statsmodels",
+          "ARIMA",
+          "Prophet",
+          "scikit-learn",
+          "Backtesting",
           "APIs",
           "Flask",
-          "TypeScript",
-          "Google Sheets",
-          "Cloud services",
-          "GitHub"
+          "TypeScript"
         ]
-      },
-      {
-        label: "Modelado",
-        tools: [
-          "scikit-learn",
-          "Prophet",
-          "ARIMA",
-          "Validación",
-          "Limpieza de datos",
-          "Documentación"
-        ]
-      }
-    ],
-    impactStats: [
-      {
-        value: "-70%",
-        label: "Reducción de trabajo manual",
-        detail:
-          "Automatización de procesos repetitivos de limpieza, cruce, actualización y reporting."
-      },
-      {
-        value: "-85%",
-        label: "Reducción de errores",
-        detail:
-          "Validaciones, reglas de negocio y normalización de datos para mejorar la confiabilidad de los reportes."
-      },
-      {
-        value: "BI",
-        label: "Información lista para decisión",
-        detail:
-          "Dashboards y reportes diseñados para que los equipos entiendan qué está pasando y qué necesitan revisar."
       }
     ]
   },
@@ -289,13 +260,12 @@ export const copy = {
   en: {
     site: {
       defaultDescription:
-        "Professional portfolio focused on data analysis, BI, automation, and internal data products.",
+        "Data engineering and analytics projects built on public data. Each case study includes the code and what was measured.",
       unavailableTitle: "Project unavailable"
     },
     nav: {
       projects: "Projects",
       stack: "Stack",
-      impact: "Impact",
       contact: "Contact",
       privacy: "Privacy",
       homeLabel: "Eduardo Anica González home",
@@ -303,47 +273,41 @@ export const copy = {
       language: "Select language"
     },
     hero: {
-      role: "Data Analyst / Analytics Engineering",
-      headline:
-        "I build data solutions to understand, measure, and improve processes.",
+      role: "Data & Analytics Engineer",
+      headline: "I take data from the source to the dashboard and test every step.",
       summary:
-        "I work with Python, SQL, BI, automation, and backend tools to turn scattered information into reports, pipelines, and tools that support better decisions.",
+        "I mostly work in Python and SQL and deploy to Google Cloud with Terraform. The projects here use public data, and each case study shows the figures measured with it.",
       projectsCta: "View projects",
       contactCta: "Contact",
-      noteLabel: "Working approach",
+      noteLabel: "How I work",
       professionalNote:
-        "I focus on solving real operational problems: cleaning data, connecting sources, automating reports, designing KPIs, and building dashboards or internal services that are clear, maintainable, and useful for teams."
+        "Most of the work happens before the dashboard: understanding where the data comes from, validating it, and automating the load so nobody has to build the report by hand."
     },
     home: {
       featuredTitle: "Featured case studies",
       featuredDescription:
-        "Selected projects based on impact, technical clarity, and practical value.",
+        "Projects with the code on GitHub, the architecture explained, and the figures that were measured.",
       viewAllProjects: "View all projects",
-      noFeaturedTitle: "No featured projects yet.",
+      noFeaturedTitle: "No projects published yet.",
       noFeaturedMessage:
-        "Sync projects from the backend and mark the strongest case studies as featured.",
+        "The projects are being updated. In the meantime, the code is on my GitHub.",
       latestTitle: "Latest case studies",
-      latestDescription:
-        "Recent projects with technical context, tools used, and a clear explanation of the problem solved.",
-      impactTitle:
-        "Impact shows up when manual work decreases and decisions become clearer.",
-      impactDescription:
-        "This portfolio shows projects where scattered data becomes processes, reports, or tools that teams can actually use."
+      latestDescription: "The most recent projects not listed above."
     },
     about: {
       eyebrow: "Profile",
-      title: "I work between data analysis, automation, and BI.",
+      title: "Data analysis, BI, and the pipelines behind them.",
       body:
-        "I am a Data Analyst with experience building pipelines, dashboards, automated reports, and internal tools for operations, service, and business teams. I mainly work with Python, SQL, pandas, Power BI, DAX, Looker Studio, PostgreSQL, BigQuery, and APIs. I care about creating solutions that do not just answer one question, but leave behind a clearer, repeatable, and maintainable process.",
+        "I have experience building pipelines, dashboards, automated reports, and internal tools for operations, service, and business teams. I mostly use Python, SQL, pandas, Power BI, DAX, Looker Studio, PostgreSQL, BigQuery, and APIs. What I care about most in a project is what stays behind: a process anyone on the team can run again and check.",
       photoAlt: "Portrait of Eduardo Anica González",
       photoPlaceholder: "Photo pending",
       toolsLabel: "Tools by area"
     },
     contact: {
       eyebrow: "Contact",
-      title: "Let's talk about data that needs to become useful.",
+      title: "Want to talk about a project or a role?",
       description:
-        "I can help with analysis, BI, automation, data cleaning, pipelines, executive reporting, or internal tools for teams that need to organize information and make better decisions.",
+        "Write to me through this form or on LinkedIn. If it's about a project, it helps to know where the data comes from and what decision it needs to support.",
       linksLabel: "Profiles",
       formTitle: "Send a message",
       nameLabel: "Name",
@@ -351,13 +315,11 @@ export const copy = {
       emailLabel: "Email",
       emailPlaceholder: "you@email.com",
       messageLabel: "Message",
-      messagePlaceholder:
-        "Briefly describe what you need to analyze, automate, or improve.",
+      messagePlaceholder: "Tell me what you need and what data you have.",
       companyLabel: "Company",
       submit: "Send message",
       submitting: "Sending...",
-      success:
-        "Message sent. I will reply after reviewing the context.",
+      success: "Message sent. Thanks, I'll get back to you soon.",
       error:
         "The message could not be sent. Try again or reach me through LinkedIn.",
       validationError:
@@ -415,12 +377,11 @@ export const copy = {
     projects: {
       pageTitle: "Projects",
       pageDescription:
-        "Projects in data analysis, BI, automation, dashboards, backend, and case studies.",
+        "Data engineering and analytics case studies, with the code and measured figures for each project.",
       eyebrow: "Case studies",
-      headline:
-        "Projects focused on solving problems with data, not just showing charts.",
+      headline: "Each project, with its code and what was measured.",
       description:
-        "Explore projects built with real data, scripts, dashboards, APIs, models, and technical documentation. Each case explains the problem, the process, and the outcome.",
+        "Each case explains the problem, how the pipeline is built, and what was checked against real data. The code is on GitHub, and you can filter by tool.",
       filterLabel: "Filter projects by tool",
       all: "All",
       featured: "Featured",
@@ -429,11 +390,10 @@ export const copy = {
       demo: "Demo",
       dashboard: "Dashboard",
       emptyTitle: "No projects match this filter.",
-      emptyMessage:
-        "Choose another tool or clear the filter to see every project returned by the API.",
+      emptyMessage: "Try another tool or go back to the full list.",
       missingSlug: "The project slug is missing.",
-      notFound: "The requested project was not found.",
-      loadError: "The project could not be loaded from the backend API.",
+      notFound: "That project doesn't exist or is no longer published.",
+      loadError: "This project could not be loaded. Try again in a few minutes.",
       unavailable: "Project unavailable",
       back: "Back to projects",
       date: "Date",
@@ -443,78 +403,60 @@ export const copy = {
       dashboardTitle: "{title} Looker Studio dashboard"
     },
     states: {
-      dataUnavailable: "The portfolio data is unavailable.",
+      dataUnavailable: "The projects didn't load.",
       dataUnavailableMessage:
-        "Check that the backend is running and that PUBLIC_API_URL points to the correct API.",
+        "Try again in a few minutes. In the meantime, the code for every project is on my GitHub.",
       noContentTitle: "This case study has no content yet.",
       noContentMessage:
-        "Sync a Markdown file through the backend so it can render sanitized HTML here.",
+        "Check back in a few minutes or look at the project repository.",
       undated: "Undated"
     },
     stackGroups: [
       {
-        label: "Data pipelines",
+        label: "Pipelines and data",
         tools: [
           "Python",
           "pandas",
           "SQL",
           "PostgreSQL",
-          "BigQuery",
-          "ETL"
+          "DuckDB",
+          "Spark",
+          "Delta Lake"
         ]
       },
       {
-        label: "Analytics & BI",
+        label: "Cloud and infrastructure",
+        tools: [
+          "BigQuery",
+          "Cloud Run",
+          "Cloud Storage",
+          "Terraform",
+          "Docker",
+          "GitHub Actions"
+        ]
+      },
+      {
+        label: "BI and reporting",
         tools: [
           "Power BI",
           "DAX",
           "Looker Studio",
-          "KPI design",
-          "Reporting",
-          "Forecasting"
+          "Google Sheets",
+          "KPI design"
         ]
       },
       {
-        label: "Automation",
+        label: "Modeling and automation",
         tools: [
+          "statsmodels",
+          "ARIMA",
+          "Prophet",
+          "scikit-learn",
+          "Backtesting",
           "APIs",
           "Flask",
-          "TypeScript",
-          "Google Sheets",
-          "Cloud services",
-          "GitHub"
+          "TypeScript"
         ]
-      },
-      {
-        label: "Modeling",
-        tools: [
-          "scikit-learn",
-          "Prophet",
-          "ARIMA",
-          "Validation",
-          "Data cleaning",
-          "Documentation"
-        ]
-      }
-    ],
-    impactStats: [
-      {
-        value: "-70%",
-        label: "Less manual work",
-        detail:
-          "Automation of repetitive cleaning, joining, updating, and reporting processes."
-      },
-      {
-        value: "-85%",
-        label: "Fewer errors",
-        detail:
-          "Validations, business rules, and data normalization to improve reporting reliability."
-      },
-      {
-        value: "BI",
-        label: "Decision-ready information",
-        detail:
-          "Dashboards and reports designed to help teams understand what is happening and what needs attention."
       }
     ]
   }

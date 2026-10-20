@@ -24,9 +24,3 @@ export type SocialLink = {
   label: string;
   href: string;
 };
-
-export type ImpactStat = {
-  value: string;
-  label: string;
-  detail: string;
-};

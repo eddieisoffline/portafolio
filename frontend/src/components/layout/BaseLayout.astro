@@ -2,6 +2,7 @@
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
 import { copy, type Locale } from "../../lib/i18n";
+import { siteProfile } from "../../lib/siteContent";
 import { getSiteOrigin, toAbsoluteUrl } from "../../lib/siteUrl";
 import "../../styles/global.css";
 
@@ -23,7 +24,7 @@ const {
 } = Astro.props;
 const description =
   Astro.props.description ?? copy[locale].site.defaultDescription;
-const pageTitle = title.includes("Data & Analytics Engineer") ? title : `${title} | Data & Analytics Engineer`;
+const pageTitle = title.includes(siteProfile.role) ? title : `${title} | ${siteProfile.role}`;
 const siteOrigin = getSiteOrigin(Astro.url);
 const canonicalUrl = toAbsoluteUrl(canonicalPath ?? Astro.url.pathname, siteOrigin);
 const imageUrl = toAbsoluteUrl(image, siteOrigin);

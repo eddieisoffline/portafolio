@@ -3,21 +3,18 @@ import type { Locale } from "../../lib/i18n";
 import { copy } from "../../lib/i18n";
 import type { Project } from "../../lib/types";
 import ProjectGrid from "../projects/ProjectGrid.astro";
-import Section from "../ui/Section.astro";
 
 interface Props {
   projects: Project[];
   locale: Locale;
+  start: number;
 }
 
-const { projects, locale } = Astro.props;
+const { projects, locale, start } = Astro.props;
 const t = copy[locale];
 ---
 
-<Section
-  title={t.home.latestTitle}
-  description={t.home.latestDescription}
-  class="border-t border-border"
->
-  <ProjectGrid projects={projects} locale={locale} />
-</Section>
+<section class="problems-wrap" aria-labelledby="latest-title">
+  <h2 class="block-title" id="latest-title">{t.home.latestTitle}</h2>
+  <ProjectGrid projects={projects} locale={locale} start={start} headingLevel="h3" />
+</section>

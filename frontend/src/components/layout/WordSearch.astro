@@ -1,0 +1,13 @@
+---
+// Sopa de letras detrás de la cabecera de inicio; en cada visita marca herramientas
+// elegidas al azar del stack que aparece en "Sobre mí".
+interface Props {
+  tools: string[];
+}
+
+const { tools } = Astro.props;
+---
+
+<div class="letters" aria-hidden="true" data-letters data-tools={JSON.stringify(tools)}></div>
+
+<script is:inline src="/scripts/word-search.js" defer></script>

@@ -17,7 +17,7 @@
       form.reportValidity();
       if (status) {
         status.textContent = status.dataset.validationError ?? "";
-        status.className = "min-h-6 text-sm text-danger";
+        status.dataset.state = "error";
       }
       return;
     }
@@ -28,7 +28,7 @@
     if (submitLabel && status) {
       submitLabel.textContent = status.dataset.submitting ?? initialLabel;
       status.textContent = "";
-      status.className = "min-h-6 text-sm text-muted";
+      status.dataset.state = "pending";
     }
 
     try {
@@ -45,12 +45,12 @@
       form.reset();
       if (status) {
         status.textContent = status.dataset.success ?? "";
-        status.className = "min-h-6 text-sm text-primary-strong";
+        status.dataset.state = "success";
       }
     } catch {
       if (status) {
         status.textContent = status.dataset.error ?? "";
-        status.className = "min-h-6 text-sm text-danger";
+        status.dataset.state = "error";
       }
     } finally {
       submitButton?.removeAttribute("disabled");

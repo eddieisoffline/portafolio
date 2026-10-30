@@ -1,9 +1,13 @@
 ---
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
+import WordSearch from "./WordSearch.astro";
 import { copy, type Locale } from "../../lib/i18n";
 import { siteProfile } from "../../lib/siteContent";
 import { getSiteOrigin, toAbsoluteUrl } from "../../lib/siteUrl";
+import "@fontsource-variable/libre-franklin";
+import "@fontsource-variable/source-serif-4/opsz.css";
+import "@fontsource-variable/source-serif-4/opsz-italic.css";
 import "../../styles/global.css";
 
 interface Props {
@@ -13,6 +17,7 @@ interface Props {
   canonicalPath?: string;
   image?: string;
   type?: "website" | "article";
+  wordSearch?: boolean;
 }
 
 const {
@@ -20,7 +25,8 @@ const {
   locale,
   canonicalPath,
   image = "/social-card.png",
-  type = "website"
+  type = "website",
+  wordSearch = false
 } = Astro.props;
 const description =
   Astro.props.description ?? copy[locale].site.defaultDescription;
@@ -41,7 +47,7 @@ const shouldLoadAnalytics = !import.meta.env.DEV;
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <meta name="robots" content="index,follow" />
-    <meta name="theme-color" content="#171717" />
+    <meta name="theme-color" content="#16438a" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:site_name" content="Eduardo Anica Gonzalez" />
@@ -59,8 +65,14 @@ const shouldLoadAnalytics = !import.meta.env.DEV;
     <title>{pageTitle}</title>
   </head>
   <body>
-    <Header locale={locale} />
-    <main class="content-reveal">
+    <div class="sheet" data-word-search={wordSearch ? "" : undefined}>
+      {wordSearch ? <WordSearch tools={copy[locale].stackGroups.flatMap((group) => group.tools)} /> : null}
+      <div class:list={["wrap sheet-in", wordSearch && "sheet-in--home"]}>
+        <Header locale={locale} />
+        <slot name="hero" />
+      </div>
+    </div>
+    <main class="wrap">
       <slot />
     </main>
     <Footer locale={locale} />

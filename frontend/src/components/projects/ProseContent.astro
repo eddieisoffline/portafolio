@@ -10,11 +10,15 @@ interface Props {
 const { html, locale } = Astro.props;
 const t = copy[locale];
 const hasContent = typeof html === "string" && html.trim().length > 0;
+// Las imágenes del Markdown llegan sin atributos de carga; se difieren para no bloquear el render.
+const contentHtml = hasContent
+  ? (html ?? "").replace(/<img(?![^>]*\bloading=)/g, '<img loading="lazy" decoding="async"')
+  : "";
 ---
 
 {
   hasContent ? (
-    <div class="prose" set:html={html} />
+    <div class="prose" set:html={contentHtml} />
   ) : (
     <EmptyState title={t.states.noContentTitle} message={t.states.noContentMessage} />
   )

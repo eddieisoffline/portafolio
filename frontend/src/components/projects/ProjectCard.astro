@@ -49,6 +49,7 @@ const meta = [formatDate(project.date, locale), project.tools.join(", ")]
             src={project.coverImage}
             alt={interpolate(t.projects.coverAlt, { title: project.title })}
             loading="lazy"
+            decoding="async"
           />
         </figure>
       ) : (

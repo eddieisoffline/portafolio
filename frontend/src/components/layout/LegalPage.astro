@@ -1,0 +1,63 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Button from "../ui/Button.astro";
+import { type Locale, withLocale } from "../../lib/i18n";
+
+type LegalSection = {
+  readonly title: string;
+  readonly body: string;
+  readonly items?: readonly string[];
+};
+
+interface Props {
+  locale: Locale;
+  path: string;
+  content: {
+    readonly pageTitle: string;
+    readonly pageDescription: string;
+    readonly headline: string;
+    readonly intro: string;
+    readonly updated: string;
+    readonly contactCta: string;
+    readonly sections: readonly LegalSection[];
+  };
+}
+
+const { locale, path, content } = Astro.props;
+---
+
+<BaseLayout
+  title={content.pageTitle}
+  description={content.pageDescription}
+  locale={locale}
+  canonicalPath={withLocale(path, locale)}
+>
+  <Fragment slot="hero">
+    <h1 class="display display--page display--top">{content.headline}</h1>
+    <p class="page-lede">{content.intro}</p>
+  </Fragment>
+
+  <section class="problems-wrap">
+    <div class="prose">
+      <p>{content.updated}</p>
+      {
+        content.sections.map((section) => (
+          <>
+            <h2>{section.title}</h2>
+            <p>{section.body}</p>
+            {section.items && section.items.length > 0 ? (
+              <ul>
+                {section.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            ) : null}
+          </>
+        ))
+      }
+    </div>
+    <p class="mt-10">
+      <Button href={withLocale("/#contact", locale)}>{content.contactCta}</Button>
+    </p>
+  </section>
+</BaseLayout>

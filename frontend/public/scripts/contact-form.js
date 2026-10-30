@@ -9,6 +9,7 @@
   const submitLabel = form.querySelector("[data-submit-label]");
   const submitButton = form.querySelector("button[type='submit']");
   const initialLabel = submitLabel?.textContent ?? "";
+  const loadedAt = Date.now();
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -23,6 +24,7 @@
     }
 
     const formData = new FormData(form);
+    formData.set("elapsed", String(Date.now() - loadedAt));
 
     submitButton?.setAttribute("disabled", "true");
     if (submitLabel && status) {

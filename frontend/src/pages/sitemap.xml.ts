@@ -6,7 +6,7 @@ import { getSiteOrigin, toAbsoluteUrl } from "../lib/siteUrl";
 
 export const prerender = false;
 
-const STATIC_PATHS = ["/", "/projects", "/privacy"] as const;
+const STATIC_PATHS = ["/", "/projects", "/privacy", "/legal", "/cookies"] as const;
 
 export const GET: APIRoute = async ({ request }) => {
   const siteOrigin = getSiteOrigin(new URL(request.url));

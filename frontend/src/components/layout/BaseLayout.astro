@@ -2,9 +2,19 @@
 import Footer from "./Footer.astro";
 import Header from "./Header.astro";
 import WordSearch from "./WordSearch.astro";
-import { copy, type Locale } from "../../lib/i18n";
+import {
+  copy,
+  defaultLocale,
+  stripLocaleFromPath,
+  supportedLocales,
+  type Locale,
+  withLocale
+} from "../../lib/i18n";
 import { siteProfile } from "../../lib/siteContent";
+import type { StructuredData } from "../../lib/structuredData";
 import { getSiteOrigin, toAbsoluteUrl } from "../../lib/siteUrl";
+import franklinFont from "@fontsource-variable/libre-franklin/files/libre-franklin-latin-wght-normal.woff2?url";
+import serifFont from "@fontsource-variable/source-serif-4/files/source-serif-4-latin-opsz-normal.woff2?url";
 import "@fontsource-variable/libre-franklin";
 import "@fontsource-variable/source-serif-4/opsz.css";
 import "@fontsource-variable/source-serif-4/opsz-italic.css";
@@ -18,6 +28,9 @@ interface Props {
   image?: string;
   type?: "website" | "article";
   wordSearch?: boolean;
+  noindex?: boolean;
+  alternateLocales?: readonly Locale[];
+  structuredData?: StructuredData;
 }
 
 const {
@@ -26,7 +39,10 @@ const {
   canonicalPath,
   image = "/social-card.png",
   type = "website",
-  wordSearch = false
+  wordSearch = false,
+  noindex = false,
+  alternateLocales = supportedLocales,
+  structuredData
 } = Astro.props;
 const description =
   Astro.props.description ?? copy[locale].site.defaultDescription;
@@ -37,6 +53,19 @@ const imageUrl = toAbsoluteUrl(image, siteOrigin);
 const ogLocale = locale === "es" ? "es_MX" : "en_US";
 const alternateLocale = locale === "es" ? "en_US" : "es_MX";
 const shouldLoadAnalytics = !import.meta.env.DEV;
+const pathWithoutLocale = stripLocaleFromPath(canonicalPath ?? Astro.url.pathname);
+const alternates = noindex
+  ? []
+  : alternateLocales.map((item) => ({
+      hreflang: item,
+      href: toAbsoluteUrl(withLocale(pathWithoutLocale, item), siteOrigin)
+    }));
+const xDefaultUrl = alternateLocales.includes(defaultLocale)
+  ? toAbsoluteUrl(withLocale(pathWithoutLocale, defaultLocale), siteOrigin)
+  : null;
+const structuredDataJson = structuredData
+  ? JSON.stringify(structuredData).replace(/</g, "\\u003c")
+  : null;
 ---
 
 <!doctype html>
@@ -46,10 +75,22 @@ const shouldLoadAnalytics = !import.meta.env.DEV;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content={noindex ? "noindex,follow" : "index,follow"} />
     <meta name="theme-color" content="#16438a" />
-    <link rel="canonical" href={canonicalUrl} />
+    {noindex ? null : <link rel="canonical" href={canonicalUrl} />}
+    {
+      alternates.map((alternate) => (
+        <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
+      ))
+    }
+    {alternates.length > 0 && xDefaultUrl ? (
+      <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+    ) : null}
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href={franklinFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={serifFont} as="font" type="font/woff2" crossorigin />
     <meta property="og:site_name" content="Eduardo Anica Gonzalez" />
     <meta property="og:type" content={type} />
     <meta property="og:title" content={pageTitle} />
@@ -63,6 +104,11 @@ const shouldLoadAnalytics = !import.meta.env.DEV;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
     <title>{pageTitle}</title>
+    {
+      structuredDataJson ? (
+        <script is:inline type="application/ld+json" set:html={structuredDataJson} />
+      ) : null
+    }
   </head>
   <body>
     <div class="sheet" data-word-search={wordSearch ? "" : undefined}>

@@ -1,0 +1,14 @@
+---
+export const prerender = false;
+
+import LegalPage from "../../components/layout/LegalPage.astro";
+import { copy, isLocale } from "../../lib/i18n";
+
+const locale = Astro.params.locale;
+
+if (!isLocale(locale)) {
+  return Astro.rewrite("/404");
+}
+---
+
+<LegalPage locale={locale} path="/cookies" content={copy[locale].cookies} />

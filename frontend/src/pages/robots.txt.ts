@@ -9,6 +9,7 @@ export const GET: APIRoute = ({ request }) => {
   const body = [
     "User-agent: *",
     "Allow: /",
+    "Disallow: /api/",
     `Sitemap: ${siteOrigin}/sitemap.xml`,
     ""
   ].join("\n");

@@ -592,6 +592,28 @@ button:disabled {
   font-weight: 700;
 }
 
+/* 404 */
+.not-found-label {
+  display: inline-block;
+  margin: 4rem 0 0;
+  padding: 0.2rem 0.55rem;
+  border: 1.5px solid var(--color-ink);
+  background: var(--color-hi);
+  color: var(--color-on-hi);
+  font-family: var(--font-head);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  transform: rotate(-3deg);
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 0;
+}
+
 /* Filtros */
 .filters {
   display: flex;

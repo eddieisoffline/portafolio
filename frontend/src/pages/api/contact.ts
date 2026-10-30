@@ -10,12 +10,15 @@ const CONTACT_RATE_LIMIT = {
   windowMs: 15 * 60 * 1000
 };
 const MAX_RATE_LIMIT_BUCKETS = 5000;
+// Una persona tarda más que esto en llenar nombre, email y mensaje; los bots no.
+const MIN_FILL_TIME_MS = 3000;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request, locals }) => {
   const requestId = locals.requestId ?? getRequestId(request.headers);
+
   const rateLimit = checkContactRateLimit(getContactRateLimitKey(request));
 
   if (!rateLimit.allowed) {
@@ -33,7 +36,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const formData = await request.formData();
     const company = getField(formData, "company");
 
-    if (company.length > 0) {
+    if (company.length > 0 || !isHumanFillTime(getField(formData, "elapsed"))) {
+      serverLogger.warn("contact_spam_dropped", { requestId });
       return json({ ok: true }, 200, requestId);
     }
 
@@ -102,6 +106,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return json({ ok: false, error: "contact_unexpected_error", requestId }, 500, requestId);
   }
 };
+
+function isHumanFillTime(value: string): boolean {
+  const elapsedMs = Number(value);
+  return Number.isFinite(elapsedMs) && elapsedMs >= MIN_FILL_TIME_MS;
+}
 
 function getField(formData: FormData, key: string): string {
   const value = formData.get(key);

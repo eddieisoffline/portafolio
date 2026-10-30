@@ -66,7 +66,7 @@ const shouldLoadAnalytics = !import.meta.env.DEV;
   </head>
   <body>
     <div class="sheet" data-word-search={wordSearch ? "" : undefined}>
-      {wordSearch ? <WordSearch /> : null}
+      {wordSearch ? <WordSearch tools={copy[locale].stackGroups.flatMap((group) => group.tools)} /> : null}
       <div class:list={["wrap sheet-in", wordSearch && "sheet-in--home"]}>
         <Header locale={locale} />
         <slot name="hero" />

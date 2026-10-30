@@ -1,27 +1,13 @@
 ---
-// Sopa de letras detrás de la cabecera de inicio; las palabras marcadas son herramientas reales del stack.
-const wideWords = [
-  ["PYTHON", 0, 3, false],
-  ["SQL", 1, 4, false],
-  ["BIGQUERY", 2, 3, true],
-  ["TERRAFORM", 3, 4, true],
-  ["POWERBI", 4, -3, false],
-  ["DOCKER", 5, -2, true]
-];
-const narrowWords = [
-  ["SQL", 0, 3, false],
-  ["PYTHON", 0, 3, true],
-  ["POWERBI", 0, -3, false]
-];
+// Sopa de letras detrás de la cabecera de inicio; en cada visita marca herramientas
+// elegidas al azar del stack que aparece en "Sobre mí".
+interface Props {
+  tools: string[];
+}
+
+const { tools } = Astro.props;
 ---
 
-<div
-  class="letters"
-  aria-hidden="true"
-  data-letters
-  data-wide={JSON.stringify(wideWords)}
-  data-narrow={JSON.stringify(narrowWords)}
->
-</div>
+<div class="letters" aria-hidden="true" data-letters data-tools={JSON.stringify(tools)}></div>
 
 <script is:inline src="/scripts/word-search.js" defer></script>

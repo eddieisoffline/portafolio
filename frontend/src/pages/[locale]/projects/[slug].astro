@@ -7,7 +7,7 @@ import ProseContent from "../../../components/projects/ProseContent.astro";
 import ErrorState from "../../../components/ui/ErrorState.astro";
 import ArticleLayout from "../../../layouts/ArticleLayout.astro";
 import { getProject } from "../../../lib/api";
-import { copy, interpolate, isLocale, type Locale } from "../../../lib/i18n";
+import { copy, interpolate, isLocale, type Locale, withLocale } from "../../../lib/i18n";
 import type { Project } from "../../../lib/types";
 
 const localeParam = Astro.params.locale;
@@ -47,6 +47,7 @@ if (!slug) {
       <LookerEmbed
         url={project.dashboardUrl}
         title={interpolate(t.projects.dashboardTitle, { title: project.title })}
+        heading={t.projects.dashboard}
       />
     </ArticleLayout>
   ) : (
@@ -55,7 +56,11 @@ if (!slug) {
       description={errorMessage}
       locale={locale}
     >
-      <section class="mx-auto w-full max-w-4xl px-5 py-16 sm:px-6 lg:px-8">
+      <Fragment slot="hero">
+        <a class="back" href={withLocale("/projects", locale)}>{t.projects.back}</a>
+        <h1 class="display display--page">{t.projects.unavailable}</h1>
+      </Fragment>
+      <section class="problems-wrap">
         <ErrorState
           title={t.projects.unavailable}
           message={errorMessage}

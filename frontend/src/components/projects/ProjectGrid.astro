@@ -6,11 +6,22 @@ import ProjectCard from "./ProjectCard.astro";
 interface Props {
   projects: Project[];
   locale: Locale;
+  start?: number;
+  headingLevel?: "h2" | "h3";
 }
 
-const { projects, locale } = Astro.props;
+const { projects, locale, start = 1, headingLevel } = Astro.props;
 ---
 
-<div class="grid gap-5 md:grid-cols-2">
-  {projects.map((project) => <ProjectCard project={project} locale={locale} />)}
-</div>
+<ol class="problems" start={start}>
+  {
+    projects.map((project, index) => (
+      <ProjectCard
+        project={project}
+        locale={locale}
+        number={start + index}
+        headingLevel={headingLevel}
+      />
+    ))
+  }
+</ol>

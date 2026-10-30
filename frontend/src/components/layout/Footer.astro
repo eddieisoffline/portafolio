@@ -11,30 +11,18 @@ const visibleSocialLinks = socialLinks.filter((link) => link.href.trim().length 
 const t = copy[locale];
 ---
 
-<footer class="border-t border-border">
-  <div class="mx-auto flex w-full max-w-6xl flex-col gap-5 px-5 py-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-    <p>
-      {siteProfile.name} / {t.hero.role}
-    </p>
-    <div class="flex flex-wrap gap-4">
-      <a class="transition hover:text-ink" href={withLocale("/projects", locale)}>
-        {t.nav.projects}
-      </a>
-      <a class="transition hover:text-ink" href={withLocale("/privacy", locale)}>
-        {t.nav.privacy}
-      </a>
+<footer class="site-footer">
+  <div class="wrap">
+    <span>{siteProfile.displayName} · {t.hero.role}</span>
+    <nav aria-label={t.nav.footer}>
       {
         visibleSocialLinks.map((link) => (
-          <a
-            class="transition hover:text-ink"
-            href={link.href}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href={link.href} target="_blank" rel="noreferrer">
             {link.label}
           </a>
         ))
       }
-    </div>
+      <a href={withLocale("/privacy", locale)}>{t.nav.privacy}</a>
+    </nav>
   </div>
 </footer>

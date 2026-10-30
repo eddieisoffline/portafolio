@@ -61,51 +61,37 @@ export const copy = {
     },
     nav: {
       projects: "Proyectos",
-      stack: "Stack",
       contact: "Contacto",
       privacy: "Privacidad",
+      footer: "Pie de página",
       homeLabel: "Inicio de Eduardo Anica González",
       primary: "Navegación principal",
       language: "Seleccionar idioma"
     },
     hero: {
       role: "Data & Analytics Engineer",
-      headline: "Llevo datos de la fuente al tablero y pruebo cada paso.",
       summary:
-        "Trabajo sobre todo con Python y SQL, y despliego en Google Cloud con Terraform. Los proyectos de este sitio usan datos públicos, y cada caso de estudio muestra las cifras que se midieron con ellos.",
-      projectsCta: "Ver proyectos",
-      contactCta: "Contactar",
-      noteLabel: "Forma de trabajo",
-      professionalNote:
-        "Casi todo el trabajo pasa antes del tablero: entender de dónde salen los datos, validarlos y automatizar la carga para que nadie tenga que armar el reporte a mano."
+        "Soy ingeniero de datos y analítica. Estos son problemas que resolví con datos públicos, cada uno con su código.",
+      indexLabel: "Proyectos en esta página"
     },
     home: {
-      featuredTitle: "Casos de estudio destacados",
-      featuredDescription:
-        "Proyectos con el código en GitHub, la arquitectura explicada y las cifras que se midieron.",
-      viewAllProjects: "Ver todos los proyectos",
+      featuredTitle: "Proyectos",
+      viewAllProjects: "Todos los proyectos",
       noFeaturedTitle: "Todavía no hay proyectos publicados.",
       noFeaturedMessage:
         "Los proyectos se están actualizando. Mientras tanto, el código está en mi GitHub.",
-      latestTitle: "Últimos casos de estudio",
-      latestDescription: "Los proyectos más recientes que no aparecen arriba."
+      latestTitle: "Más proyectos"
     },
     about: {
-      eyebrow: "Perfil",
-      title: "Análisis de datos, BI y los pipelines que hay detrás.",
+      title: "Sobre mí",
       body:
-        "Tengo experiencia construyendo pipelines, dashboards, reportes automáticos y herramientas internas para equipos de operación, servicio y negocio. Uso sobre todo Python, SQL, pandas, Power BI, DAX, Looker Studio, PostgreSQL, BigQuery y APIs. Lo que más me importa de un proyecto es lo que queda después: un proceso que cualquiera del equipo pueda volver a correr y revisar.",
-      photoAlt: "Retrato de Eduardo Anica González",
-      photoPlaceholder: "Foto pendiente",
+        "He trabajado con equipos de operación, servicio y negocio haciendo pipelines, dashboards, reportes automáticos y herramientas internas. Me gusta dejar procesos que cualquiera del equipo pueda volver a correr y revisar.",
       toolsLabel: "Herramientas por área"
     },
     contact: {
-      eyebrow: "Contacto",
-      title: "¿Quieres platicar de un proyecto o de una vacante?",
-      description:
-        "Escríbeme por este formulario o por LinkedIn. Si es sobre un proyecto, ayuda saber de dónde vienen los datos y qué decisión tienen que apoyar.",
-      linksLabel: "Perfiles",
-      formTitle: "Enviar mensaje",
+      title: "Contacto",
+      description: "Si tienes una vacante o un proyecto, mándame un mensaje aquí",
+      orOn: "o por",
       nameLabel: "Nombre",
       namePlaceholder: "Tu nombre",
       emailLabel: "Email",
@@ -113,7 +99,7 @@ export const copy = {
       messageLabel: "Mensaje",
       messagePlaceholder: "Cuéntame qué necesitas y con qué datos cuentas.",
       companyLabel: "Empresa",
-      submit: "Enviar mensaje",
+      submit: "Enviar",
       submitting: "Enviando...",
       success: "Mensaje enviado. Gracias, te respondo pronto.",
       error:
@@ -125,7 +111,6 @@ export const copy = {
       pageTitle: "Privacidad",
       pageDescription:
         "Cómo este portafolio profesional trata datos personales, contacto, analítica y datasets demostrativos.",
-      eyebrow: "Privacidad",
       headline: "Uso responsable de datos en este portafolio.",
       intro:
         "Este sitio web es un portafolio profesional orientado a Data Analytics, Data Engineering y Cloud.",
@@ -174,14 +159,14 @@ export const copy = {
       pageTitle: "Proyectos",
       pageDescription:
         "Casos de estudio de ingeniería y análisis de datos, con el código y las cifras medidas de cada proyecto.",
-      eyebrow: "Casos de estudio",
-      headline: "Cada proyecto, con su código y lo que se midió.",
+      headline: "Proyectos",
       description:
-        "Cada caso explica el problema, cómo está armado el pipeline y qué se comprobó con datos reales. El código está en GitHub y puedes filtrar por herramienta.",
+        "Cada uno explica el problema, cómo lo resolví y qué medí. El código está en GitHub y puedes filtrar por herramienta.",
       filterLabel: "Filtrar proyectos por herramienta",
       all: "Todos",
       featured: "Destacado",
-      readCaseStudy: "Leer caso de estudio",
+      readCaseStudy: "Leer el caso",
+      linksLabel: "Enlaces de {title}",
       repo: "Repo",
       demo: "Demo",
       dashboard: "Dashboard",
@@ -209,7 +194,7 @@ export const copy = {
     },
     stackGroups: [
       {
-        label: "Pipelines y datos",
+        label: "Datos",
         tools: [
           "Python",
           "pandas",
@@ -221,7 +206,7 @@ export const copy = {
         ]
       },
       {
-        label: "Nube e infraestructura",
+        label: "Nube",
         tools: [
           "BigQuery",
           "Cloud Run",
@@ -232,7 +217,7 @@ export const copy = {
         ]
       },
       {
-        label: "BI y reportes",
+        label: "Reportes",
         tools: [
           "Power BI",
           "DAX",
@@ -242,7 +227,7 @@ export const copy = {
         ]
       },
       {
-        label: "Modelado y automatización",
+        label: "Modelos",
         tools: [
           "statsmodels",
           "ARIMA",
@@ -265,51 +250,37 @@ export const copy = {
     },
     nav: {
       projects: "Projects",
-      stack: "Stack",
       contact: "Contact",
       privacy: "Privacy",
+      footer: "Footer",
       homeLabel: "Eduardo Anica González home",
       primary: "Primary navigation",
       language: "Select language"
     },
     hero: {
       role: "Data & Analytics Engineer",
-      headline: "I take data from the source to the dashboard and test every step.",
       summary:
-        "I mostly work in Python and SQL and deploy to Google Cloud with Terraform. The projects here use public data, and each case study shows the figures measured with it.",
-      projectsCta: "View projects",
-      contactCta: "Contact",
-      noteLabel: "How I work",
-      professionalNote:
-        "Most of the work happens before the dashboard: understanding where the data comes from, validating it, and automating the load so nobody has to build the report by hand."
+        "I'm a data and analytics engineer. These are problems I solved with public data, each one with its code.",
+      indexLabel: "Projects on this page"
     },
     home: {
-      featuredTitle: "Featured case studies",
-      featuredDescription:
-        "Projects with the code on GitHub, the architecture explained, and the figures that were measured.",
-      viewAllProjects: "View all projects",
+      featuredTitle: "Projects",
+      viewAllProjects: "All projects",
       noFeaturedTitle: "No projects published yet.",
       noFeaturedMessage:
         "The projects are being updated. In the meantime, the code is on my GitHub.",
-      latestTitle: "Latest case studies",
-      latestDescription: "The most recent projects not listed above."
+      latestTitle: "More projects"
     },
     about: {
-      eyebrow: "Profile",
-      title: "Data analysis, BI, and the pipelines behind them.",
+      title: "About me",
       body:
-        "I have experience building pipelines, dashboards, automated reports, and internal tools for operations, service, and business teams. I mostly use Python, SQL, pandas, Power BI, DAX, Looker Studio, PostgreSQL, BigQuery, and APIs. What I care about most in a project is what stays behind: a process anyone on the team can run again and check.",
-      photoAlt: "Portrait of Eduardo Anica González",
-      photoPlaceholder: "Photo pending",
+        "I've worked with operations, service, and business teams building pipelines, dashboards, automated reports, and internal tools. I like to leave behind processes anyone on the team can run again and check.",
       toolsLabel: "Tools by area"
     },
     contact: {
-      eyebrow: "Contact",
-      title: "Want to talk about a project or a role?",
-      description:
-        "Write to me through this form or on LinkedIn. If it's about a project, it helps to know where the data comes from and what decision it needs to support.",
-      linksLabel: "Profiles",
-      formTitle: "Send a message",
+      title: "Contact",
+      description: "If you have a role or a project, send me a message here",
+      orOn: "or on",
       nameLabel: "Name",
       namePlaceholder: "Your name",
       emailLabel: "Email",
@@ -317,7 +288,7 @@ export const copy = {
       messageLabel: "Message",
       messagePlaceholder: "Tell me what you need and what data you have.",
       companyLabel: "Company",
-      submit: "Send message",
+      submit: "Send",
       submitting: "Sending...",
       success: "Message sent. Thanks, I'll get back to you soon.",
       error:
@@ -329,7 +300,6 @@ export const copy = {
       pageTitle: "Privacy",
       pageDescription:
         "How this professional portfolio handles personal data, contact messages, analytics, and demo datasets.",
-      eyebrow: "Privacy",
       headline: "Responsible data practices for this portfolio.",
       intro:
         "This website is a professional portfolio focused on Data Analytics, Data Engineering, and Cloud.",
@@ -378,14 +348,14 @@ export const copy = {
       pageTitle: "Projects",
       pageDescription:
         "Data engineering and analytics case studies, with the code and measured figures for each project.",
-      eyebrow: "Case studies",
-      headline: "Each project, with its code and what was measured.",
+      headline: "Projects",
       description:
-        "Each case explains the problem, how the pipeline is built, and what was checked against real data. The code is on GitHub, and you can filter by tool.",
+        "Each one explains the problem, how I solved it, and what I measured. The code is on GitHub, and you can filter by tool.",
       filterLabel: "Filter projects by tool",
       all: "All",
       featured: "Featured",
-      readCaseStudy: "Read case study",
+      readCaseStudy: "Read the case",
+      linksLabel: "{title} links",
       repo: "Repo",
       demo: "Demo",
       dashboard: "Dashboard",
@@ -413,7 +383,7 @@ export const copy = {
     },
     stackGroups: [
       {
-        label: "Pipelines and data",
+        label: "Data",
         tools: [
           "Python",
           "pandas",
@@ -425,7 +395,7 @@ export const copy = {
         ]
       },
       {
-        label: "Cloud and infrastructure",
+        label: "Cloud",
         tools: [
           "BigQuery",
           "Cloud Run",
@@ -436,7 +406,7 @@ export const copy = {
         ]
       },
       {
-        label: "BI and reporting",
+        label: "Reporting",
         tools: [
           "Power BI",
           "DAX",
@@ -446,7 +416,7 @@ export const copy = {
         ]
       },
       {
-        label: "Modeling and automation",
+        label: "Models",
         tools: [
           "statsmodels",
           "ARIMA",

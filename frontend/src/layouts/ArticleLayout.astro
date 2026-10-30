@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../components/layout/BaseLayout.astro";
 import ProjectMeta from "../components/projects/ProjectMeta.astro";
-import { formatDate } from "../lib/formatDate";
 import { copy, interpolate, type Locale, withLocale } from "../lib/i18n";
 import type { Project } from "../lib/types";
 
@@ -22,48 +21,27 @@ const t = copy[locale];
   image={project.coverImage ?? undefined}
   type="article"
 >
-  <article class="mx-auto w-full max-w-6xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8">
-    <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start">
-      <div class="min-w-0">
-        <div class="mb-8">
-          <a
-            href={withLocale("/projects", locale)}
-            class="text-sm font-medium text-muted transition hover:text-primary-strong"
-          >
-            {t.projects.back}
-          </a>
-          <p class="mt-8 font-mono text-xs uppercase tracking-[0.18em] text-primary">
-            {formatDate(project.date, locale)}
-          </p>
-          <h1 class="mt-4 max-w-4xl text-balance text-4xl font-semibold leading-tight text-ink sm:text-5xl">
-            {project.title}
-          </h1>
-          {
-            project.summary ? (
-              <p class="mt-5 max-w-3xl text-lg leading-8 text-muted">
-                {project.summary}
-              </p>
-            ) : null
-          }
-        </div>
+  <Fragment slot="hero">
+    <a class="back" href={withLocale("/projects", locale)}>{t.projects.back}</a>
+    <h1 class="display display--page">{project.title}</h1>
+    {project.summary ? <p class="page-lede">{project.summary}</p> : null}
+  </Fragment>
 
-        {
-          project.coverImage ? (
+  <article class="case-body">
+    <div class="min-w-0">
+      {
+        project.coverImage ? (
+          <figure class="case-cover">
             <img
               src={project.coverImage}
               alt={interpolate(t.projects.coverAlt, { title: project.title })}
               loading="eager"
-              class="mb-10 aspect-[16/8] w-full rounded-xl border border-border object-cover"
             />
-          ) : null
-        }
-
-        <slot />
-      </div>
-
-      <div class="lg:sticky lg:top-24">
-        <ProjectMeta project={project} locale={locale} />
-      </div>
+          </figure>
+        ) : null
+      }
+      <slot />
     </div>
+    <ProjectMeta project={project} locale={locale} />
   </article>
 </BaseLayout>

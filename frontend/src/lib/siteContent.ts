@@ -2,6 +2,8 @@ import type { SocialLink } from "./types";
 
 export const siteProfile = {
   name: "Eduardo Anica Gonzalez",
+  shortName: "E. Anica",
+  displayName: "Eduardo Anica González",
   role: "Data & Analytics Engineer",
   photoSrc: "",
   location: "",

@@ -48,16 +48,23 @@ const latestProjects = sortedProjects
   description={copy[locale].hero.summary}
   locale={locale}
   canonicalPath={withLocale("/", locale)}
+  wordSearch
 >
-  <Hero locale={locale} />
+  <Hero slot="hero" locale={locale} projects={hadProjectError ? [] : homeProjects} />
   <FeaturedProjects
     projects={homeProjects}
     hadError={hadProjectError}
     locale={locale}
   />
   {latestProjects.length > 0 && (
-    <LatestWriting projects={latestProjects} locale={locale} />
+    <LatestWriting
+      projects={latestProjects}
+      locale={locale}
+      start={homeProjects.length + 1}
+    />
   )}
-  <AboutMe locale={locale} />
-  <ContactSection locale={locale} />
+  <div class="lower">
+    <AboutMe locale={locale} />
+    <ContactSection locale={locale} />
+  </div>
 </BaseLayout>

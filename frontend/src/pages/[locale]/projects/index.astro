@@ -3,7 +3,6 @@ export const prerender = false;
 
 import BaseLayout from "../../../components/layout/BaseLayout.astro";
 import ProjectGrid from "../../../components/projects/ProjectGrid.astro";
-import Badge from "../../../components/ui/Badge.astro";
 import EmptyState from "../../../components/ui/EmptyState.astro";
 import ErrorState from "../../../components/ui/ErrorState.astro";
 import { getProjects } from "../../../lib/api";
@@ -45,51 +44,49 @@ const t = copy[locale];
   locale={locale}
   canonicalPath={withLocale("/projects", locale)}
 >
-  <section class="mx-auto w-full max-w-6xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8">
-    <div class="max-w-3xl">
-      <p class="font-mono text-xs uppercase tracking-[0.18em] text-primary">
-        {t.projects.eyebrow}
-      </p>
-      <h1 class="mt-4 text-balance text-4xl font-semibold leading-tight text-ink sm:text-5xl">
-        {t.projects.headline}
-      </h1>
-      <p class="mt-5 text-lg leading-8 text-muted">
-        {t.projects.description}
-      </p>
-    </div>
+  <Fragment slot="hero">
+    <h1 class="display display--page display--top">{t.projects.headline}</h1>
+    <p class="page-lede">{t.projects.description}</p>
+  </Fragment>
 
+  <section class="problems-wrap">
     {
       hadError ? (
-        <div class="mt-10">
-          <ErrorState locale={locale} />
-        </div>
+        <ErrorState locale={locale} />
       ) : (
         <>
           {tools.length > 0 ? (
-            <div class="mt-10 flex flex-wrap gap-2" aria-label={t.projects.filterLabel}>
-              <a href={withLocale("/projects", locale)}>
-                <Badge tone={selectedTool ? "muted" : "primary"}>{t.projects.all}</Badge>
-              </a>
-              {tools.map((tool) => (
-                <a href={`${withLocale("/projects", locale)}?tool=${encodeURIComponent(tool)}`}>
-                  <Badge tone={selectedTool === tool ? "primary" : "muted"}>
-                    {tool}
-                  </Badge>
-                </a>
-              ))}
-            </div>
+            <nav class="mb-12" aria-label={t.projects.filterLabel}>
+              <ul class="filters">
+                <li>
+                  <a
+                    class="chip"
+                    href={withLocale("/projects", locale)}
+                    aria-current={selectedTool ? undefined : "page"}
+                  >
+                    {t.projects.all}
+                  </a>
+                </li>
+                {tools.map((tool) => (
+                  <li>
+                    <a
+                      class="chip"
+                      href={`${withLocale("/projects", locale)}?tool=${encodeURIComponent(tool)}`}
+                      aria-current={selectedTool === tool ? "page" : undefined}
+                    >
+                      {tool}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           ) : null}
 
-          <div class="mt-10">
-            {filteredProjects.length > 0 ? (
-              <ProjectGrid projects={filteredProjects} locale={locale} />
-            ) : (
-              <EmptyState
-                title={t.projects.emptyTitle}
-                message={t.projects.emptyMessage}
-              />
-            )}
-          </div>
+          {filteredProjects.length > 0 ? (
+            <ProjectGrid projects={filteredProjects} locale={locale} />
+          ) : (
+            <EmptyState title={t.projects.emptyTitle} message={t.projects.emptyMessage} />
+          )}
         </>
       )
     }

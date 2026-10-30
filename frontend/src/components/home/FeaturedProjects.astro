@@ -2,10 +2,8 @@
 import type { Project } from "../../lib/types";
 import { copy, type Locale, withLocale } from "../../lib/i18n";
 import ProjectGrid from "../projects/ProjectGrid.astro";
-import Button from "../ui/Button.astro";
 import EmptyState from "../ui/EmptyState.astro";
 import ErrorState from "../ui/ErrorState.astro";
-import Section from "../ui/Section.astro";
 
 interface Props {
   projects: Project[];
@@ -17,27 +15,22 @@ const { projects, locale, hadError = false } = Astro.props;
 const t = copy[locale];
 ---
 
-<Section
-  title={t.home.featuredTitle}
-  description={t.home.featuredDescription}
->
+<section class="problems-wrap" id="projects" aria-labelledby="projects-title">
+  <h2 class="sr-only" id="projects-title">{t.home.featuredTitle}</h2>
   {
     hadError ? (
       <ErrorState locale={locale} />
     ) : projects.length > 0 ? (
       <>
-        <ProjectGrid projects={projects} locale={locale} />
-        <div class="mt-8">
-          <Button href={withLocale("/projects", locale)} variant="secondary">
+        <ProjectGrid projects={projects} locale={locale} headingLevel="h3" />
+        <p class="mt-8">
+          <a class="text-link" href={withLocale("/projects", locale)}>
             {t.home.viewAllProjects}
-          </Button>
-        </div>
+          </a>
+        </p>
       </>
     ) : (
-      <EmptyState
-        title={t.home.noFeaturedTitle}
-        message={t.home.noFeaturedMessage}
-      />
+      <EmptyState title={t.home.noFeaturedTitle} message={t.home.noFeaturedMessage} />
     )
   }
-</Section>
+</section>

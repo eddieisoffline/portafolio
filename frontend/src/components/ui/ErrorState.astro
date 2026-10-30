@@ -14,8 +14,7 @@ const {
 } = Astro.props;
 ---
 
-<div class="rounded-xl border border-danger/50 bg-danger/10 px-6 py-8">
-  <p class="font-mono text-xs uppercase tracking-[0.18em] text-danger">Error</p>
-  <h3 class="mt-3 text-lg font-semibold text-ink">{title}</h3>
-  <p class="mt-2 max-w-2xl text-sm leading-6 text-muted">{message}</p>
+<div class="notice notice--error" role="status">
+  <h3>{title}</h3>
+  <p>{message}</p>
 </div>

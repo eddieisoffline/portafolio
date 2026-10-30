@@ -63,6 +63,8 @@ export const copy = {
       projects: "Proyectos",
       contact: "Contacto",
       privacy: "Privacidad",
+      legal: "Aviso legal",
+      cookies: "Cookies",
       footer: "Pie de página",
       homeLabel: "Inicio de Eduardo Anica González",
       primary: "Navegación principal",
@@ -114,9 +116,14 @@ export const copy = {
       headline: "Uso responsable de datos en este portafolio.",
       intro:
         "Este sitio web es un portafolio profesional orientado a Data Analytics, Data Engineering y Cloud.",
-      updated: "Actualizada: 1 de septiembre de 2026",
+      updated: "Actualizada: 30 de octubre de 2026",
       contactCta: "Ir a contacto",
       sections: [
+        {
+          title: "Responsable",
+          body:
+            "El responsable de los datos que envías por este sitio es Eduardo Anica González, titular del portafolio."
+        },
         {
           title: "Datos recopilados",
           body:
@@ -141,7 +148,7 @@ export const copy = {
         {
           title: "Cookies y analítica",
           body:
-            "Este sitio usa una cookie funcional llamada portfolio_locale para recordar el idioma seleccionado. También utiliza Vercel Web Analytics, que ofrece métricas agregadas y no usa cookies para identificar visitantes."
+            "Este sitio usa una cookie funcional llamada portfolio_locale para recordar el idioma seleccionado. También utiliza Vercel Web Analytics, que ofrece métricas agregadas y no usa cookies para identificar visitantes. El detalle está en el aviso de cookies."
         },
         {
           title: "Proyectos y datasets",
@@ -154,6 +161,94 @@ export const copy = {
             "Para solicitudes relacionadas con tus datos personales, utiliza el formulario de contacto de este sitio o el perfil de LinkedIn enlazado en el footer."
         }
       ]
+    },
+    legal: {
+      pageTitle: "Aviso legal",
+      pageDescription:
+        "Titular, condiciones de uso y propiedad intelectual de este portafolio profesional.",
+      headline: "Aviso legal.",
+      intro: "Quién está detrás de este sitio y en qué condiciones puedes usarlo.",
+      updated: "Actualizado: 30 de octubre de 2026",
+      contactCta: "Ir a contacto",
+      sections: [
+        {
+          title: "Titular",
+          body:
+            "Este sitio es el portafolio profesional de Eduardo Anica González, a título personal. No vende productos ni servicios en línea. Para cualquier comunicación, usa el formulario de contacto."
+        },
+        {
+          title: "Objeto",
+          body:
+            "El sitio presenta proyectos de ingeniería y análisis de datos con fines informativos y de presentación profesional."
+        },
+        {
+          title: "Propiedad intelectual",
+          body:
+            "Los textos, el diseño y los casos de estudio son de su autor, salvo que se indique otra cosa. El código de cada proyecto se publica en GitHub con la licencia indicada en su repositorio. Los datasets públicos conservan la licencia de su fuente original."
+        },
+        {
+          title: "Enlaces externos",
+          body:
+            "El sitio enlaza a GitHub, LinkedIn, Kaggle, Looker Studio y otras páginas de terceros. Su contenido y sus políticas de privacidad dependen de cada servicio."
+        },
+        {
+          title: "Responsabilidad",
+          body:
+            "Las cifras de cada proyecto se presentan tal como se midieron en su momento y con fines demostrativos. No son asesoría profesional. Intento mantener la información correcta y al día, pero puede contener errores."
+        },
+        {
+          title: "Datos personales y cookies",
+          body:
+            "Cómo se tratan tus datos está en la política de privacidad, y qué cookies se usan, en el aviso de cookies."
+        }
+      ]
+    },
+    cookies: {
+      pageTitle: "Aviso de cookies",
+      pageDescription:
+        "Qué cookies usa este portafolio, para qué sirven y cómo eliminarlas.",
+      headline: "Cookies en este sitio.",
+      intro: "El sitio usa una sola cookie, y es funcional.",
+      updated: "Actualizado: 30 de octubre de 2026",
+      contactCta: "Ir a contacto",
+      sections: [
+        {
+          title: "La cookie que se usa",
+          body:
+            "portfolio_locale guarda el idioma de la última página que visitaste (es o en) para mostrarte el sitio en ese idioma la próxima vez.",
+          items: [
+            "Nombre: portfolio_locale.",
+            "Tipo: propia y funcional.",
+            "Duración: 1 año.",
+            "Contenido: solo el código de idioma, sin datos personales."
+          ]
+        },
+        {
+          title: "Analítica sin cookies",
+          body:
+            "Las visitas se miden con Vercel Web Analytics, que no usa cookies ni identificadores persistentes. Las métricas son agregadas y no permiten identificarte."
+        },
+        {
+          title: "Por qué no hay banner",
+          body:
+            "La única cookie recuerda una preferencia de idioma y no se usa para analítica, publicidad ni seguimiento. Por eso el sitio no pide consentimiento."
+        },
+        {
+          title: "Cómo eliminarla",
+          body:
+            "Puedes borrarla o bloquearla desde la configuración de tu navegador. El sitio sigue funcionando y elige el idioma según la configuración de tu navegador."
+        }
+      ]
+    },
+    notFound: {
+      pageTitle: "Página no encontrada",
+      pageDescription: "La página que buscas no existe.",
+      label: "Error 404",
+      headline: "Esta página no existe.",
+      body:
+        "Puede que el enlace esté mal escrito o que la página se haya movido. Los proyectos siguen en su lugar.",
+      home: "Ir al inicio",
+      projects: "Ver proyectos"
     },
     projects: {
       pageTitle: "Proyectos",
@@ -252,6 +347,8 @@ export const copy = {
       projects: "Projects",
       contact: "Contact",
       privacy: "Privacy",
+      legal: "Legal notice",
+      cookies: "Cookies",
       footer: "Footer",
       homeLabel: "Eduardo Anica González home",
       primary: "Primary navigation",
@@ -303,9 +400,14 @@ export const copy = {
       headline: "Responsible data practices for this portfolio.",
       intro:
         "This website is a professional portfolio focused on Data Analytics, Data Engineering, and Cloud.",
-      updated: "Updated: September 1, 2026",
+      updated: "Updated: October 30, 2026",
       contactCta: "Go to contact",
       sections: [
+        {
+          title: "Data controller",
+          body:
+            "The person responsible for the data you send through this site is Eduardo Anica González, owner of this portfolio."
+        },
         {
           title: "Data collected",
           body:
@@ -330,7 +432,7 @@ export const copy = {
         {
           title: "Cookies and analytics",
           body:
-            "This site uses a functional cookie named portfolio_locale to remember the selected language. It also uses Vercel Web Analytics, which provides aggregated metrics and does not use cookies to identify visitors."
+            "This site uses a functional cookie named portfolio_locale to remember the selected language. It also uses Vercel Web Analytics, which provides aggregated metrics and does not use cookies to identify visitors. Details are in the cookie notice."
         },
         {
           title: "Projects and datasets",
@@ -343,6 +445,94 @@ export const copy = {
             "For requests related to your personal data, use this site's contact form or the LinkedIn profile linked in the footer."
         }
       ]
+    },
+    legal: {
+      pageTitle: "Legal notice",
+      pageDescription:
+        "Owner, terms of use, and intellectual property of this professional portfolio.",
+      headline: "Legal notice.",
+      intro: "Who runs this site and the terms under which you can use it.",
+      updated: "Updated: October 30, 2026",
+      contactCta: "Go to contact",
+      sections: [
+        {
+          title: "Owner",
+          body:
+            "This site is the personal professional portfolio of Eduardo Anica González. It does not sell products or services online. For any communication, use the contact form."
+        },
+        {
+          title: "Purpose",
+          body:
+            "The site presents data engineering and analytics projects for informational and professional purposes."
+        },
+        {
+          title: "Intellectual property",
+          body:
+            "Texts, design, and case studies belong to their author unless stated otherwise. Each project's code is published on GitHub under the license stated in its repository. Public datasets keep the license of their original source."
+        },
+        {
+          title: "External links",
+          body:
+            "The site links to GitHub, LinkedIn, Kaggle, Looker Studio, and other third-party pages. Their content and privacy policies are up to each service."
+        },
+        {
+          title: "Liability",
+          body:
+            "Project figures are presented as they were measured at the time and for demonstration purposes. They are not professional advice. I try to keep the information accurate and current, but it may contain errors."
+        },
+        {
+          title: "Personal data and cookies",
+          body:
+            "How your data is handled is explained in the privacy policy, and which cookies are used, in the cookie notice."
+        }
+      ]
+    },
+    cookies: {
+      pageTitle: "Cookie notice",
+      pageDescription:
+        "Which cookies this portfolio uses, what they are for, and how to remove them.",
+      headline: "Cookies on this site.",
+      intro: "The site uses a single cookie, and it is functional.",
+      updated: "Updated: October 30, 2026",
+      contactCta: "Go to contact",
+      sections: [
+        {
+          title: "The cookie in use",
+          body:
+            "portfolio_locale stores the language of the last page you visited (es or en) so the site opens in that language next time.",
+          items: [
+            "Name: portfolio_locale.",
+            "Type: first-party, functional.",
+            "Duration: 1 year.",
+            "Content: only the language code, no personal data."
+          ]
+        },
+        {
+          title: "Cookieless analytics",
+          body:
+            "Visits are measured with Vercel Web Analytics, which uses no cookies or persistent identifiers. Metrics are aggregated and cannot identify you."
+        },
+        {
+          title: "Why there is no banner",
+          body:
+            "The only cookie remembers a language preference and is not used for analytics, advertising, or tracking. That is why the site does not ask for consent."
+        },
+        {
+          title: "How to remove it",
+          body:
+            "You can delete or block it in your browser settings. The site keeps working and picks the language from your browser settings."
+        }
+      ]
+    },
+    notFound: {
+      pageTitle: "Page not found",
+      pageDescription: "The page you are looking for does not exist.",
+      label: "Error 404",
+      headline: "This page doesn't exist.",
+      body:
+        "The link may be mistyped or the page may have moved. The projects are still where they were.",
+      home: "Go home",
+      projects: "See projects"
     },
     projects: {
       pageTitle: "Projects",

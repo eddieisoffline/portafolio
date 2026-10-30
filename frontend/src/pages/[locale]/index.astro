@@ -11,12 +11,14 @@ import { getProjects } from "../../lib/api";
 import { compareProjectsByDate } from "../../lib/formatDate";
 import { copy, isLocale, type Locale, withLocale } from "../../lib/i18n";
 import { siteProfile } from "../../lib/siteContent";
+import { getSiteOrigin } from "../../lib/siteUrl";
+import { getHomeSchema } from "../../lib/structuredData";
 import type { Project } from "../../lib/types";
 
 const localeParam = Astro.params.locale;
 
 if (!isLocale(localeParam)) {
-  return Astro.redirect("/en", 302);
+  return Astro.rewrite("/404");
 }
 
 const locale: Locale = localeParam;
@@ -48,6 +50,7 @@ const latestProjects = sortedProjects
   description={copy[locale].hero.summary}
   locale={locale}
   canonicalPath={withLocale("/", locale)}
+  structuredData={getHomeSchema(locale, getSiteOrigin(Astro.url))}
   wordSearch
 >
   <Hero slot="hero" locale={locale} projects={hadProjectError ? [] : homeProjects} />

@@ -1,52 +1,14 @@
 ---
 export const prerender = false;
 
-import BaseLayout from "../../components/layout/BaseLayout.astro";
-import Button from "../../components/ui/Button.astro";
-import { copy, isLocale, type Locale, withLocale } from "../../lib/i18n";
+import LegalPage from "../../components/layout/LegalPage.astro";
+import { copy, isLocale } from "../../lib/i18n";
 
-const localeParam = Astro.params.locale;
+const locale = Astro.params.locale;
 
-if (!isLocale(localeParam)) {
-  return Astro.redirect("/en/privacy", 302);
+if (!isLocale(locale)) {
+  return Astro.rewrite("/404");
 }
-
-const locale: Locale = localeParam;
-const t = copy[locale];
 ---
 
-<BaseLayout
-  title={t.privacy.pageTitle}
-  description={t.privacy.pageDescription}
-  locale={locale}
-  canonicalPath={withLocale("/privacy", locale)}
->
-  <Fragment slot="hero">
-    <h1 class="display display--page display--top">{t.privacy.headline}</h1>
-    <p class="page-lede">{t.privacy.intro}</p>
-  </Fragment>
-
-  <section class="problems-wrap">
-    <div class="prose">
-      <p>{t.privacy.updated}</p>
-      {
-        t.privacy.sections.map((section) => (
-          <>
-            <h2>{section.title}</h2>
-            <p>{section.body}</p>
-            {"items" in section && section.items.length > 0 ? (
-              <ul>
-                {section.items.map((item) => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            ) : null}
-          </>
-        ))
-      }
-    </div>
-    <p class="mt-10">
-      <Button href={withLocale("/#contact", locale)}>{t.privacy.contactCta}</Button>
-    </p>
-  </section>
-</BaseLayout>
+<LegalPage locale={locale} path="/privacy" content={copy[locale].privacy} />

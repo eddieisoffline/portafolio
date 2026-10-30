@@ -13,7 +13,7 @@ import type { Project } from "../../../lib/types";
 const localeParam = Astro.params.locale;
 
 if (!isLocale(localeParam)) {
-  return Astro.redirect("/en/projects", 302);
+  return Astro.rewrite("/404");
 }
 
 const locale: Locale = localeParam;
@@ -55,6 +55,7 @@ if (!slug) {
       title={t.projects.unavailable}
       description={errorMessage}
       locale={locale}
+      noindex
     >
       <Fragment slot="hero">
         <a class="back" href={withLocale("/projects", locale)}>{t.projects.back}</a>

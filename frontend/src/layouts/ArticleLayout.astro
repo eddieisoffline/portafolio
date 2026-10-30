@@ -1,7 +1,9 @@
 ---
 import BaseLayout from "../components/layout/BaseLayout.astro";
 import ProjectMeta from "../components/projects/ProjectMeta.astro";
-import { copy, interpolate, type Locale, withLocale } from "../lib/i18n";
+import { copy, interpolate, isLocale, type Locale, withLocale } from "../lib/i18n";
+import { getSiteOrigin } from "../lib/siteUrl";
+import { getProjectSchema } from "../lib/structuredData";
 import type { Project } from "../lib/types";
 
 interface Props {
@@ -11,6 +13,7 @@ interface Props {
 
 const { project, locale } = Astro.props;
 const t = copy[locale];
+const alternateLocales = project.availableLocales?.filter(isLocale) ?? [locale];
 ---
 
 <BaseLayout
@@ -20,6 +23,8 @@ const t = copy[locale];
   canonicalPath={withLocale(`/projects/${project.slug}`, locale)}
   image={project.coverImage ?? undefined}
   type="article"
+  alternateLocales={alternateLocales.length > 0 ? alternateLocales : [locale]}
+  structuredData={getProjectSchema(project, locale, getSiteOrigin(Astro.url))}
 >
   <Fragment slot="hero">
     <a class="back" href={withLocale("/projects", locale)}>{t.projects.back}</a>
@@ -36,6 +41,8 @@ const t = copy[locale];
               src={project.coverImage}
               alt={interpolate(t.projects.coverAlt, { title: project.title })}
               loading="eager"
+              fetchpriority="high"
+              decoding="async"
             />
           </figure>
         ) : null

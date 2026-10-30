@@ -13,7 +13,7 @@ import type { Project } from "../../../lib/types";
 const localeParam = Astro.params.locale;
 
 if (!isLocale(localeParam)) {
-  return Astro.redirect("/en/projects", 302);
+  return Astro.rewrite("/404");
 }
 
 const locale: Locale = localeParam;

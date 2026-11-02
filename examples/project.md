@@ -1,49 +1,116 @@
 ---
 title:
-  es: Prediccion de abandono de clientes
-  en: Customer Churn Prediction
-slug: customer-churn-prediction
+  es: "Nombre del proyecto en español"
+  en: "Project name in English"
+slug: "nombre-del-proyecto"
 summary:
-  es: Modelo que predice riesgo de abandono y destaca las señales de retencion mas fuertes.
-  en: Model that predicts churn risk and highlights the strongest retention signals.
+  es: "Qué hace el pipeline, con qué datos y dónde corre. 220 caracteres como máximo: la tarjeta lo corta a 3 líneas."
+  en: "What the pipeline does, which data it uses and where it runs. 220 characters at most: the card cuts it to 3 lines."
 tools:
   - Python
-  - scikit-learn
   - pandas
-  - FastAPI
-repo_url: https://github.com/your-user/customer-churn
-demo_url: https://customer-churn-demo.example.com
-cover_image: https://images.example.com/customer-churn-cover.png
+  - SQL
+  - BigQuery
+  - Cloud Storage
+  - Cloud Run
+repo_url: "https://github.com/eddieisoffline/nombre-del-proyecto"
+cover_image: "https://raw.githubusercontent.com/eddieisoffline/nombre-del-proyecto/main/docs/img/captura.png"
 featured: true
-date: 2026-01-15
+date: "2026-01-15"
 ---
 
-:::en
-# Customer Churn Prediction
+:::es
+## Problema
 
-This project explores subscription behavior, engineers retention features, and trains a model that estimates churn probability.
+Qué pregunta responde el proyecto y para quién. Una o dos frases.
 
-## Results
+## Estado
 
-- ROC AUC: `0.88`
-- Top signals: tenure, support tickets, failed payments
+Solo si el proyecto está en curso. Una tabla con lo que ya se ejecutó, sin lo planeado.
 
-## Notes
+| Pieza | Estado |
+|-------|--------|
+| Ingesta diaria | funciona desde AAAA-MM-DD |
 
-Raw HTML is intentionally not needed here. Markdown is rendered and sanitized by the backend.
+## Arquitectura
+
+```text
+fuente ─► Cloud Storage ─► BigQuery ─► dashboard
+```
+
+## Dashboard
+
+Enlace absoluto al dashboard o a la evidencia: [Ver el dashboard](https://example.com).
+
+## Metodología
+
+Cómo se limpia, se modela o se valida. Si el proyecto aún no tiene modelo, esta sección se llama "Lo que ya funciona".
+
+## Hallazgos sobre la fuente
+
+Problemas reales de los datos: huecos, cambios de formato, revisiones.
+
+## Lo que dicen los datos
+
+Cifras con fecha y fuente.
+
+## Decisiones de diseño
+
+Qué se eligió, qué se descartó y por qué.
+
+## Stack
+
+Python, pandas, SQL, BigQuery, Cloud Storage y Cloud Run.
+
+## Datos
+
+Fuente, licencia, atribución y enlace a los docs del repo.
 :::
 
-:::es
-# Prediccion de abandono de clientes
+:::en
+## Problem
 
-Este proyecto explora comportamiento de suscripcion, crea variables de retencion y entrena un modelo que estima la probabilidad de abandono.
+What question the project answers and for whom. One or two sentences.
 
-## Resultados
+## Status
 
-- ROC AUC: `0.88`
-- Senales principales: antiguedad, tickets de soporte, pagos fallidos
+Only if the project is in progress. A table with what has already run, not what is planned.
 
-## Notas
+| Piece | Status |
+|-------|--------|
+| Daily ingestion | running since YYYY-MM-DD |
 
-No se necesita HTML crudo aqui. El backend renderiza y sanitiza el Markdown.
+## Architecture
+
+```text
+source ─► Cloud Storage ─► BigQuery ─► dashboard
+```
+
+## Dashboard
+
+Absolute link to the dashboard or the evidence: [Open the dashboard](https://example.com).
+
+## Methodology
+
+How the data is cleaned, modeled or validated. If there is no model yet, this section is called "What already works".
+
+## Findings about the source
+
+Real problems in the data: gaps, format changes, revisions.
+
+## What the data shows
+
+Figures with a date and a source.
+
+## Design decisions
+
+What was chosen, what was ruled out and why.
+
+## Stack
+
+Python, pandas, SQL, BigQuery, Cloud Storage and Cloud Run.
+
+## Data
+
+Source, license, attribution and a link to the repo docs (in Spanish, if they are).
 :::
